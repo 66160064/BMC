@@ -44,15 +44,16 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Premium Soft Shadows */
+        /* Premium Soft Shadows & Enhanced Hover State (-4px + diffused drop shadow) */
         .soft-card {
             background: #FFFFFF;
-            box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.05), 0 2px 8px -2px rgba(15, 23, 42, 0.02);
-            transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -2px rgba(15, 23, 42, 0.02);
+            transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, box-shadow;
         }
         .soft-card:hover {
-            box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.09), 0 6px 16px -4px rgba(15, 23, 42, 0.04);
-            transform: translateY(-3px);
+            box-shadow: 0 20px 42px -4px rgba(15, 23, 42, 0.12), 0 8px 18px -4px rgba(15, 23, 42, 0.06);
+            transform: translateY(-4px);
         }
 
         .soft-shadow-banner {
@@ -60,7 +61,43 @@
         }
 
         .soft-shadow-modal {
-            box-shadow: 0 24px 64px -12px rgba(15, 23, 42, 0.18);
+            box-shadow: 0 28px 70px -12px rgba(15, 23, 42, 0.22);
+        }
+
+        /* Shimmering Skeleton Loader */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer {
+            background: linear-gradient(90deg, #F1F5F9 25%, #FFFFFF 50%, #F1F5F9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite ease-in-out;
+        }
+
+        /* 3D Hover Tilt Effect Container & Target */
+        .tilt-container {
+            perspective: 800px;
+            transform-style: preserve-3d;
+        }
+        .tilt-target {
+            transition: transform 180ms ease-out;
+            will-change: transform;
+        }
+
+        /* Staggered Card Entrance Transition */
+        @keyframes cardFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .card-enter {
+            animation: cardFadeInUp 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         /* Animations */
@@ -106,9 +143,63 @@
             background: #E2E8F0;
             border-radius: 9999px;
         }
+
+        /* Animated Checkmark SVG Draw */
+        @keyframes checkmarkStroke {
+            0% { stroke-dashoffset: 48; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .animate-checkmark-draw {
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: checkmarkStroke 0.45s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Button Morphing Animation */
+        .btn-morph {
+            transition: all 380ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Pastel Mesh Gradient Floating Keyframes */
+        @keyframes meshMove1 {
+            0%, 100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+            33% { transform: translate(45px, -65px) scale(1.1) rotate(15deg); }
+            66% { transform: translate(-35px, 35px) scale(0.92) rotate(-10deg); }
+        }
+        @keyframes meshMove2 {
+            0%, 100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+            33% { transform: translate(-55px, 45px) scale(1.08) rotate(-15deg); }
+            66% { transform: translate(35px, -45px) scale(0.95) rotate(10deg); }
+        }
+        @keyframes meshMove3 {
+            0%, 100% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(50px, 50px) scale(1.12); }
+        }
+        .animate-mesh-1 { animation: meshMove1 24s infinite ease-in-out; }
+        .animate-mesh-2 { animation: meshMove2 28s infinite ease-in-out; }
+        .animate-mesh-3 { animation: meshMove3 32s infinite ease-in-out; }
+
+        /* Scroll Reveal with Stagger */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-on-scroll.is-revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
-<body class="min-h-[100dvh] flex flex-col bg-white selection:bg-sky-500 selection:text-white">
+<body class="min-h-[100dvh] flex flex-col bg-white selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
+
+    <!-- Ambient Pastel Mesh Gradient (AI / Web3 Modern Aesthetic) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-75" aria-hidden="true">
+        <div class="absolute -top-[15%] -left-[10%] w-[55vw] h-[55vw] rounded-full bg-gradient-to-tr from-sky-200/40 via-blue-100/35 to-indigo-100/25 blur-[100px] animate-mesh-1"></div>
+        <div class="absolute top-[28%] -right-[15%] w-[52vw] h-[52vw] rounded-full bg-gradient-to-bl from-teal-100/35 via-sky-100/30 to-purple-100/25 blur-[115px] animate-mesh-2"></div>
+        <div class="absolute -bottom-[20%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-tr from-indigo-100/30 via-sky-100/25 to-amber-100/20 blur-[125px] animate-mesh-3"></div>
+    </div>
 
     <!-- Top Data Bar -->
     <div class="bg-primary text-slate-200 text-xs py-2 px-6 flex justify-between items-center font-mono border-b border-primaryDark">
@@ -164,8 +255,8 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTENT (Clean White Background) -->
-    <main class="flex-grow bg-white py-8">
+    <!-- MAIN CONTENT (Ambient Mesh Gradient with Clean Crisp Cards) -->
+    <main class="flex-grow py-8 relative z-10 bg-transparent">
         
         <!-- ========================================== -->
         <!-- RENTER VIEW -->
@@ -274,11 +365,14 @@
         <!-- ========================================== -->
         <div id="lenderView" class="hidden max-w-[1280px] mx-auto px-6 space-y-8 fade-in">
             
-            <!-- Redesigned Studio Banner (Deep Blue Gradient & Soft Ambient Depth) -->
-            <div class="rounded-3xl bg-gradient-to-r from-[#001E3D] via-[#003366] to-[#004D99] p-8 lg:p-10 text-white shadow-[0_12px_36px_rgba(0,51,102,0.18)] flex flex-col sm:flex-row justify-between items-center gap-6 relative overflow-hidden">
-                <!-- Ambient blur lighting effects -->
-                <div class="absolute -right-8 -bottom-8 w-60 h-60 bg-sky-400/20 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute left-1/4 -top-8 w-48 h-48 bg-blue-300/10 rounded-full blur-2xl pointer-events-none"></div>
+            <!-- Redesigned Studio Banner (Deep Blue Gradient & Soft Ambient Depth with Parallax) -->
+            <div id="lenderStudioBanner" class="rounded-3xl bg-gradient-to-r from-[#001E3D] via-[#003366] to-[#004D99] p-8 lg:p-10 text-white shadow-[0_12px_36px_rgba(0,51,102,0.18)] flex flex-col sm:flex-row justify-between items-center gap-6 relative overflow-hidden">
+                <!-- Parallax Ambient lighting effects layer -->
+                <div id="lenderBannerParallax" class="absolute inset-0 pointer-events-none transition-transform duration-75 ease-out">
+                    <div class="absolute -right-8 -bottom-8 w-64 h-64 bg-sky-400/25 rounded-full blur-3xl"></div>
+                    <div class="absolute left-1/4 -top-8 w-48 h-48 bg-blue-300/15 rounded-full blur-2xl"></div>
+                    <div class="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-15"></div>
+                </div>
                 
                 <div class="relative z-10 space-y-2">
                     <div class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-mono text-sky-200 border border-white/10">
@@ -297,8 +391,9 @@
             <!-- Lender Studio Grid (2 Main Borderless Cards) -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
-                <!-- Left Card: Earnings Estimator (Precision Tool Card) -->
-                <div class="bg-white rounded-3xl soft-card p-7 space-y-6 h-fit sticky top-24 border border-slate-100">
+                <!-- Left Card: Earnings Estimator (Precision Tool Card with Mesh Ambient Glow) -->
+                <div class="bg-white/95 backdrop-blur-sm rounded-3xl soft-card p-7 space-y-6 h-fit sticky top-24 border border-slate-100 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-36 h-36 bg-gradient-to-br from-sky-200/35 to-indigo-100/25 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="flex items-center justify-between pb-3 border-b border-slate-100">
                         <h3 class="font-bold text-slate-900 flex items-center gap-2 text-sm">
                             <i data-lucide="calculator" class="w-4 h-4 text-sky-600"></i> คำนวณรายได้
@@ -410,7 +505,7 @@
     <!-- ========================================== -->
     <!-- MODAL 1: BOOKING & CALCULATOR (Refined) -->
     <!-- ========================================== -->
-    <div id="bookingModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div id="bookingModal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-[12px] hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl soft-shadow-modal w-full max-w-2xl fade-in overflow-hidden max-h-[92vh] flex flex-col relative border border-slate-100">
             
             <!-- Close Button (Absolute Top Right) -->
@@ -419,7 +514,7 @@
             </button>
 
             <!-- Modal Header (Full Width Top Banner) -->
-            <div class="p-6 sm:p-7 border-b border-slate-100 bg-slate-50/60 pr-16">
+            <div class="p-6 sm:p-7 border-b border-slate-100 bg-slate-50/60 pr-16 flex-shrink-0">
                 <div class="flex items-center gap-4">
                     <img id="modalProductImage" src="" alt="" class="w-20 h-20 rounded-2xl object-cover shadow-sm border border-slate-100 flex-shrink-0">
                     <div class="min-w-0">
@@ -435,7 +530,7 @@
                 </div>
             </div>
             
-            <!-- Modal Body (Spacious Content) -->
+            <!-- Modal Body (Spacious Content with Sticky Floating Action Card) -->
             <div class="p-6 sm:p-7 text-xs space-y-6 overflow-y-auto">
                 
                 <!-- Lender Trust Info Card -->
@@ -479,39 +574,41 @@
                     </div>
                 </div>
 
-                <!-- Financial Breakdown (Luxurious Frosted Deep Navy Card) -->
-                <div class="bg-gradient-to-br from-[#001E3D] via-[#002D59] to-[#001830] text-white p-6 sm:p-7 rounded-3xl space-y-4 shadow-xl relative overflow-hidden border border-white/10">
-                    <div class="absolute -right-8 -bottom-8 w-44 h-44 bg-sky-400/15 rounded-full blur-3xl pointer-events-none"></div>
-                    
-                    <div class="space-y-2.5 text-xs text-slate-300">
-                        <div class="flex justify-between items-center border-b border-white/10 pb-2.5">
-                            <span class="text-slate-200">ค่าเช่ารายวัน (<span id="modalDailyRateText">1,200</span> x <span id="modalDaysCountText">1</span>)</span>
-                            <span class="font-mono text-white font-medium text-sm">THB <span id="modalSubtotalText">1,200</span></span>
-                        </div>
+                <!-- Financial Breakdown (Sticky Floating Action Bar) -->
+                <div class="sticky -bottom-7 -mx-6 sm:-mx-7 p-4 sm:p-5 bg-white/95 backdrop-blur-md border-t border-slate-100 z-20 mt-4 shadow-[0_-8px_20px_rgba(0,0,0,0.03)]">
+                    <div class="bg-gradient-to-br from-[#001E3D] via-[#002D59] to-[#001830] text-white p-5 sm:p-6 rounded-3xl space-y-3.5 shadow-2xl relative overflow-hidden border border-white/10">
+                        <div class="absolute -right-8 -bottom-8 w-44 h-44 bg-sky-400/15 rounded-full blur-3xl pointer-events-none"></div>
+                        
+                        <div class="space-y-2 text-xs text-slate-300">
+                            <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                                <span class="text-slate-200">ค่าเช่ารายวัน (<span id="modalDailyRateText">1,200</span> x <span id="modalDaysCountText">1</span>)</span>
+                                <span class="font-mono text-white font-medium text-sm">THB <span id="modalSubtotalText">1,200</span></span>
+                            </div>
 
-                        <div class="flex justify-between items-center">
-                            <span class="text-slate-200">ค่าประกันอุบัติเหตุ (8%)</span>
-                            <span class="font-mono text-white font-medium text-sm">THB <span id="modalInsuranceText">96</span></span>
-                        </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-200">ค่าประกันอุบัติเหตุ (8%)</span>
+                                <span class="font-mono text-white font-medium text-sm">THB <span id="modalInsuranceText">96</span></span>
+                            </div>
 
-                        <div class="flex justify-between items-center border-b border-white/10 pb-2.5">
-                            <span class="text-slate-200 font-medium">เงินมัดจำ (ESCROW DEPOSIT)</span>
-                            <span class="text-amber-300 font-mono font-bold text-sm tracking-wide">THB <span id="modalDepositText">1,500</span></span>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
-                        <div>
-                            <span class="text-[11px] text-slate-300 block font-sans">ยอดชำระสุทธิ (NET TOTAL)</span>
-                            <div class="flex items-baseline gap-1.5">
-                                <span id="modalTotalPrice" class="text-3xl sm:text-4xl font-black text-sky-300 font-mono tracking-tight">2,796</span>
-                                <span class="text-xs text-slate-300 font-mono">THB</span>
+                            <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                                <span class="text-slate-200 font-medium">เงินมัดจำ (ESCROW DEPOSIT)</span>
+                                <span class="text-amber-300 font-mono font-bold text-sm tracking-wide">THB <span id="modalDepositText">1,500</span></span>
                             </div>
                         </div>
-                        <button onclick="proceedToCheckout()" class="bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold px-8 py-3.5 rounded-full transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-sky-400/25 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
-                            <span>ยืนยันการจอง</span>
-                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </button>
+
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+                            <div>
+                                <span class="text-[10px] text-slate-300 block font-sans">ยอดชำระสุทธิ (NET TOTAL)</span>
+                                <div class="flex items-baseline gap-1.5">
+                                    <span id="modalTotalPrice" class="text-2xl sm:text-3xl font-black text-sky-300 font-mono tracking-tight">2,796</span>
+                                    <span class="text-xs text-slate-300 font-mono">THB</span>
+                                </div>
+                            </div>
+                            <button id="btnProceedBooking" onclick="handleProceedBooking()" class="btn-morph bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold px-7 py-3.5 rounded-full transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-sky-400/25 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap min-w-[160px] h-[48px]">
+                                <span id="btnProceedBookingText">ยืนยันการจอง</span>
+                                <i id="btnProceedBookingIcon" data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -521,7 +618,7 @@
     <!-- ========================================== -->
     <!-- MODAL 2: CHECKOUT / PROMPTPAY (Refined) -->
     <!-- ========================================== -->
-    <div id="checkoutModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div id="checkoutModal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-[12px] hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl soft-shadow-modal w-full max-w-sm p-7 text-center space-y-6 fade-in relative border border-slate-100">
             <button onclick="closeModal('checkoutModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
             
@@ -558,16 +655,81 @@
                 </div>
             </div>
 
-            <button onclick="simulatePay()" class="w-full bg-primary hover:bg-primaryDark text-white font-bold py-3 rounded-2xl transition-all text-xs shadow-md">
-                จำลองการชำระเงินสำเร็จ
+            <button id="btnSimulatePay" onclick="handleSimulatePay()" class="btn-morph w-full bg-primary hover:bg-primaryDark text-white font-bold py-3.5 rounded-2xl transition-all text-xs shadow-md flex items-center justify-center gap-2 h-[46px]">
+                <span id="btnSimulatePayText">ยืนยันการจอง & พักเงินใน Escrow</span>
+                <i id="btnSimulatePayIcon" data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
             </button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL 4: BOOKING SUCCESS (Sleek Success State) -->
+    <!-- ========================================== -->
+    <div id="bookingSuccessModal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-[12px] hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl soft-shadow-modal w-full max-w-sm sm:max-w-md p-7 sm:p-8 text-center space-y-6 fade-in relative border border-slate-100">
+            <!-- Close button -->
+            <button onclick="closeModal('bookingSuccessModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-50 transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Animated Emerald Success Badge -->
+            <div class="relative w-20 h-20 mx-auto flex items-center justify-center">
+                <div class="absolute inset-0 bg-emerald-100 rounded-full animate-ping opacity-30"></div>
+                <div class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center shadow-xl shadow-emerald-500/25 text-white">
+                    <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" class="animate-checkmark-draw"></polyline>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="space-y-1.5">
+                <span class="inline-block px-3 py-1 bg-emerald-50 text-emerald-700 text-[10px] sm:text-[11px] font-mono font-semibold rounded-full border border-emerald-100">
+                    BOOKING CONFIRMED #RNX-8921-TH
+                </span>
+                <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">การจองอุปกรณ์สำเร็จแล้ว!</h3>
+                <p class="text-xs text-slate-500 font-sans">ระบบได้ล็อคเงินมัดจำเข้า Escrow Pool และส่งคำขอนัดรับไปยังเจ้าของอุปกรณ์เรียบร้อยแล้ว</p>
+            </div>
+
+            <!-- Success Booking Card Details -->
+            <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-100 text-left space-y-2.5 text-xs font-sans">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-400">อุปกรณ์</span>
+                    <span id="successProductTitle" class="font-bold text-slate-900 truncate max-w-[200px]">Sony A7 IV</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-400">ระยะเวลาเช่า</span>
+                    <span id="successRentalDuration" class="font-medium text-slate-800 font-mono">1 วัน</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-400">จุดรับอุปกรณ์</span>
+                    <span id="successLocation" class="font-medium text-sky-700 flex items-center gap-1 truncate max-w-[180px]">
+                        <i data-lucide="map-pin" class="w-3 h-3 text-sky-500 flex-shrink-0"></i> 
+                        <span id="successLocationText">ชลบุรี (ม.บูรพา)</span>
+                    </span>
+                </div>
+                <div class="flex justify-between items-center pt-2 border-t border-slate-200">
+                    <span class="text-slate-400">ยอดเงินใน Escrow Pool</span>
+                    <span id="successEscrowTotal" class="font-mono font-bold text-emerald-600 text-sm">THB 2,796</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 pt-1">
+                <button onclick="downloadDigitalContract()" class="flex-1 py-3 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs transition-all flex items-center justify-center gap-1.5">
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <span>สัญญาดิจิทัล</span>
+                </button>
+                <button onclick="finishBookingFlow()" class="flex-1 py-3 px-4 rounded-2xl bg-primary hover:bg-primaryDark text-white font-bold text-xs transition-all shadow-md flex items-center justify-center gap-1.5">
+                    <span>กลับสู่หน้าหลัก</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- ========================================== -->
     <!-- MODAL 3: LIST NEW GEAR (LENDER) -->
     <!-- ========================================== -->
-    <div id="listGearModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div id="listGearModal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-[12px] hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl soft-shadow-modal w-full max-w-lg p-7 space-y-5 fade-in relative border border-slate-100">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-slate-900 flex items-center gap-2 text-base">
@@ -741,11 +903,12 @@
         // Init
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
+            initParallax();
             renderProductGrid(products);
             calculateLenderEarnings();
 
             // Backdrop click to close modals
-            ['bookingModal', 'checkoutModal', 'listGearModal'].forEach(id => {
+            ['bookingModal', 'checkoutModal', 'listGearModal', 'bookingSuccessModal'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     el.addEventListener('click', (e) => {
@@ -754,6 +917,42 @@
                 }
             });
         });
+
+        // Scroll Reveal System (Fade Up with Stagger)
+        let scrollObserver = null;
+        function initScrollReveal() {
+            if (scrollObserver) scrollObserver.disconnect();
+            
+            const elements = document.querySelectorAll('.reveal-on-scroll');
+            scrollObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = parseInt(entry.target.dataset.revealDelay) || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('is-revealed');
+                        }, delay);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -25px 0px'
+            });
+
+            elements.forEach(el => scrollObserver.observe(el));
+        }
+
+        // Parallax Effect on Scroll
+        function initParallax() {
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const lenderParallax = document.getElementById('lenderBannerParallax');
+                if (lenderParallax) {
+                    // Smooth subtle depth tracking
+                    lenderParallax.style.transform = `translateY(${scrollY * 0.12}px)`;
+                }
+            }, { passive: true });
+        }
 
         // UI View Switcher
         function switchMode(mode) {
@@ -782,7 +981,101 @@
             applyFilters();
         }
 
-        // Render Grid (Borderless Cards, High-Res Product Photos, Soft Diffused Shadow)
+        // Number Counter Animation System
+        const activeCounters = {};
+        function animateNumber(elementId, targetValue, duration = 280, prefix = '', suffix = '') {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+
+            if (activeCounters[elementId]) {
+                cancelAnimationFrame(activeCounters[elementId]);
+            }
+
+            const currentText = el.innerText || '0';
+            const cleanCurrent = parseInt(currentText.replace(/[^0-9]/g, '')) || 0;
+            const cleanTarget = Math.round(targetValue);
+
+            if (cleanCurrent === cleanTarget) {
+                el.innerText = `${prefix}${cleanTarget.toLocaleString()}${suffix}`;
+                return;
+            }
+
+            const startTime = performance.now();
+
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Ease-out cubic
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const currentValue = Math.round(cleanCurrent + (cleanTarget - cleanCurrent) * easeOut);
+
+                el.innerText = `${prefix}${currentValue.toLocaleString()}${suffix}`;
+
+                if (progress < 1) {
+                    activeCounters[elementId] = requestAnimationFrame(updateCounter);
+                } else {
+                    el.innerText = `${prefix}${cleanTarget.toLocaleString()}${suffix}`;
+                    delete activeCounters[elementId];
+                }
+            }
+
+            activeCounters[elementId] = requestAnimationFrame(updateCounter);
+        }
+
+        // 3D Hover Tilt Effect System
+        function initTiltEffect() {
+            const cards = document.querySelectorAll('.tilt-box');
+            cards.forEach(card => {
+                const target = card.querySelector('.tilt-target') || card;
+                
+                card.onmousemove = (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    // Subtle ±6deg rotation
+                    const rotateX = -((y - centerY) / centerY) * 6;
+                    const rotateY = ((x - centerX) / centerX) * 6;
+                    
+                    target.style.transform = `perspective(800px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.03, 1.03, 1.03)`;
+                };
+                
+                card.onmouseleave = () => {
+                    target.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                };
+            });
+        }
+
+        // Shimmering Skeleton Loader
+        function renderSkeleton(count = 6) {
+            const grid = document.getElementById('productGrid');
+            if (!grid) return;
+            grid.innerHTML = Array(count).fill(0).map(() => `
+                <div class="rounded-3xl soft-card border border-slate-100/80 overflow-hidden flex flex-col p-0">
+                    <div class="h-52 w-full shimmer relative"></div>
+                    <div class="p-5 flex-grow flex flex-col justify-between gap-3">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <div class="h-4 w-20 rounded-full shimmer"></div>
+                                <div class="h-3 w-16 rounded shimmer"></div>
+                            </div>
+                            <div class="h-4 w-4/5 rounded shimmer"></div>
+                            <div class="h-3 w-2/3 rounded shimmer"></div>
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                            <div class="h-4 w-24 rounded shimmer"></div>
+                            <div class="h-5 w-20 rounded shimmer"></div>
+                        </div>
+                        <div class="h-9 w-full rounded-2xl shimmer mt-1"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Grid (Borderless Cards, High-Res Product Photos, Soft Diffused Shadow, Staggered Transitions & Scroll Reveal)
         function renderProductGrid(items) {
             const grid = document.getElementById('productGrid');
             document.getElementById('productCountText').innerText = items.length;
@@ -792,12 +1085,14 @@
                 return;
             }
 
-            grid.innerHTML = items.map(p => `
-                <div class="rounded-3xl soft-card border border-slate-100/80 overflow-hidden flex flex-col group cursor-pointer" onclick="openBookingModal(${p.id})">
+            grid.innerHTML = items.map((p, index) => `
+                <div class="rounded-3xl soft-card border border-slate-100/80 overflow-hidden flex flex-col group cursor-pointer tilt-box card-enter reveal-on-scroll" 
+                     data-reveal-delay="${(index % 3) * 80}" 
+                     onclick="openBookingModal(${p.id})">
                     
-                    <!-- High-Res Product Image Showcase -->
-                    <div class="relative h-52 w-full bg-slate-50 overflow-hidden flex items-center justify-center p-3">
-                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500">
+                    <!-- High-Res Product Image Showcase (Tilt & Smooth Zoom) -->
+                    <div class="relative h-52 w-full bg-slate-50 overflow-hidden flex items-center justify-center p-3 tilt-container">
+                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover rounded-2xl tilt-target group-hover:scale-[1.04] transition-all duration-500 ease-out">
                         <div class="absolute top-4 right-4 flex items-center gap-1.5 z-10">
                             <span class="bg-white/90 backdrop-blur-md text-primary font-mono text-[10px] px-2.5 py-1 rounded-full shadow-sm font-semibold">${p.badge}</span>
                         </div>
@@ -838,9 +1133,12 @@
             `).join('');
 
             lucide.createIcons();
+            initTiltEffect();
+            initScrollReveal();
         }
 
-        // Filtering
+        // Filtering with Skeleton Shimmer Transition
+        let filterTimeout = null;
         function setCategoryFilter(category) {
             activeCategory = category;
             document.querySelectorAll('.cat-btn').forEach(btn => {
@@ -849,7 +1147,12 @@
             const activeBtn = document.getElementById(`cat-${category}`);
             if (activeBtn) activeBtn.className = 'cat-btn px-4 py-2 rounded-full bg-primary text-white font-medium shadow-sm transition-all whitespace-nowrap';
 
-            applyFilters();
+            // Show shimmering skeleton cards briefly for responsive feel
+            renderSkeleton(6);
+            if (filterTimeout) clearTimeout(filterTimeout);
+            filterTimeout = setTimeout(() => {
+                applyFilters();
+            }, 230);
         }
 
         function applyFilters() {
@@ -935,10 +1238,48 @@
             const deposit = selectedProduct.deposit;
             const total = subtotal + insurance + deposit;
 
-            document.getElementById('modalSubtotalText').innerText = subtotal.toLocaleString();
-            document.getElementById('modalInsuranceText').innerText = insurance.toLocaleString();
+            // Running number counter animations
+            animateNumber('modalSubtotalText', subtotal, 240);
+            animateNumber('modalInsuranceText', insurance, 240);
             document.getElementById('modalDepositText').innerText = deposit.toLocaleString();
-            document.getElementById('modalTotalPrice').innerText = total.toLocaleString();
+            animateNumber('modalTotalPrice', total, 280);
+        }
+
+        // Sleek Success State & Booking Handlers
+        function handleProceedBooking() {
+            const btn = document.getElementById('btnProceedBooking');
+            if (!btn || btn.disabled) return;
+
+            btn.disabled = true;
+            // 1. Loading state with smooth spinning ring
+            btn.innerHTML = `
+                <div class="w-5 h-5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin"></div>
+                <span class="text-xs">กำลังตรวจสอบคิว...</span>
+            `;
+
+            setTimeout(() => {
+                // 2. Button morphs into emerald circle with animated checkmark
+                btn.className = "btn-morph !w-12 !h-12 !min-w-[48px] !p-0 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/30 scale-105";
+                btn.innerHTML = `
+                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" class="animate-checkmark-draw"></polyline>
+                    </svg>
+                `;
+
+                setTimeout(() => {
+                    // Reset button back to standard state
+                    btn.disabled = false;
+                    btn.className = "btn-morph bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold px-7 py-3.5 rounded-full transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-sky-400/25 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap min-w-[160px] h-[48px]";
+                    btn.innerHTML = `
+                        <span id="btnProceedBookingText">ยืนยันการจอง</span>
+                        <i id="btnProceedBookingIcon" data-lucide="arrow-right" class="w-4 h-4"></i>
+                    `;
+                    lucide.createIcons();
+
+                    // Proceed to checkout modal
+                    proceedToCheckout();
+                }, 750);
+            }, 1100);
         }
 
         function proceedToCheckout() {
@@ -954,7 +1295,7 @@
             
             document.getElementById('lenderDaysText').innerText = `${days} วัน`;
             const net = Math.round((price * days) * 0.85); // 85% yield
-            document.getElementById('lenderNetEarnings').innerText = `THB ${net.toLocaleString()}`;
+            animateNumber('lenderNetEarnings', net, 280, 'THB ');
         }
 
         function openListGearModal() { 
@@ -1057,9 +1398,63 @@
             }, 4000);
         }
 
+        function handleSimulatePay() {
+            const btn = document.getElementById('btnSimulatePay');
+            if (!btn || btn.disabled) return;
+
+            btn.disabled = true;
+            // 1. Loading State with smooth spinning ring
+            btn.innerHTML = `
+                <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>กำลังพักเงินใน Escrow...</span>
+            `;
+
+            setTimeout(() => {
+                // 2. Button morphs into emerald circle with checkmark
+                btn.className = "btn-morph !w-12 !h-12 !min-w-[48px] !p-0 bg-emerald-500 text-white rounded-full mx-auto flex items-center justify-center shadow-lg shadow-emerald-500/30 scale-105";
+                btn.innerHTML = `
+                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" class="animate-checkmark-draw"></polyline>
+                    </svg>
+                `;
+
+                setTimeout(() => {
+                    // Reset button
+                    btn.disabled = false;
+                    btn.className = "btn-morph w-full bg-primary hover:bg-primaryDark text-white font-bold py-3.5 rounded-2xl transition-all text-xs shadow-md flex items-center justify-center gap-2 h-[46px]";
+                    btn.innerHTML = `
+                        <span id="btnSimulatePayText">ยืนยันการจอง & พักเงินใน Escrow</span>
+                        <i id="btnSimulatePayIcon" data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                    `;
+                    lucide.createIcons();
+
+                    closeModal('checkoutModal');
+
+                    // Populate and open Booking Success Modal
+                    if (selectedProduct) {
+                        document.getElementById('successProductTitle').innerText = selectedProduct.title;
+                        document.getElementById('successLocationText').innerText = selectedProduct.locationFull;
+                    }
+                    const daysVal = document.getElementById('rentalDaysSlider') ? document.getElementById('rentalDaysSlider').value : 1;
+                    document.getElementById('successRentalDuration').innerText = `${daysVal} วัน`;
+                    document.getElementById('successEscrowTotal').innerText = `THB ${document.getElementById('qrPayAmount').innerText}`;
+
+                    openModal('bookingSuccessModal');
+                }, 750);
+            }, 1200);
+        }
+
+        function finishBookingFlow() {
+            closeModal('bookingSuccessModal');
+            showToast("ESCROW_PROTECTED", "คำขอเช่าพร้อมหลักฐาน Escrow ถูกส่งไปยังผู้ปล่อยเช่าเรียบร้อยแล้ว");
+        }
+
+        function downloadDigitalContract() {
+            showToast("CONTRACT_DOWNLOADED", "ดาวน์โหลดสัญญาเช่าดิจิทัล (Smart Escrow Contract #RNX-8921-TH) สำเร็จแล้ว");
+        }
+
         function simulatePay() {
-            closeModal('checkoutModal');
-            showToast("TRANSACTION_VERIFIED", `ล็อคเงินมัดจำ ${document.getElementById('qrPayAmount').innerText} THB เข้า Escrow สำเร็จ. อุปกรณ์พร้อมส่งมอบ!`);
+            handleSimulatePay();
         }
     </script>
 </body>
