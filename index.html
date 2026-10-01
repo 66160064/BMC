@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rentix - Precision Tech Platform (Prototype V3)</title>
+    <title>Rentix - P2P IT & Camera Equipment Rental Platform</title>
     
     <!-- Fonts: Prompt & JetBrains Mono -->
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,21 +15,18 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#003366',    // Azul Industrial
-                        secondary: '#C0C0C0',  // Prata
-                        tertiary: '#FFFFFF',   // Branco
-                        neutral: '#E0E0E0',    // Cinza Claro
-                        surface: '#00BFFF',    // Azul Elétrico
-                        accent: '#36454F',     // Cinza Escuro
-                        success: '#008000',    // Verde
-                        warning: '#FFA500'     // Laranja
+                        primary: '#003366',    // Deep Navy
+                        primaryDark: '#002244',
+                        secondary: '#94A3B8',  // Slate 400
+                        surface: '#0284C7',    // Sky 600
+                        surfaceLight: '#38BDF8', // Sky 400
+                        accent: '#334155',     // Slate 700
+                        success: '#10B981',    // Emerald 500
+                        warning: '#F59E0B'     // Amber 500
                     },
                     fontFamily: {
                         sans: ['Prompt', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    borderRadius: {
-                        DEFAULT: '8px',
                     }
                 }
             }
@@ -41,51 +38,47 @@
 
     <style>
         body {
-            background-color: #F8FAFC;
-            color: #36454F;
+            background-color: #FFFFFF;
+            color: #1E293B;
+            font-family: 'Prompt', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
-        /* Engineering Grid Background */
-        .grid-bg {
-            background-image: 
-                linear-gradient(to right, #E0E0E0 1px, transparent 1px),
-                linear-gradient(to bottom, #E0E0E0 1px, transparent 1px);
-            background-size: 32px 32px;
-            background-position: center;
+
+        /* Premium Soft Shadows */
+        .soft-card {
+            background: #FFFFFF;
+            box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.05), 0 2px 8px -2px rgba(15, 23, 42, 0.02);
+            transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .tech-border {
-            border: 1px solid #E0E0E0;
+        .soft-card:hover {
+            box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.09), 0 6px 16px -4px rgba(15, 23, 42, 0.04);
+            transform: translateY(-3px);
         }
-        .tech-border-focus {
-            border: 1px solid #00BFFF;
-            box-shadow: 0 0 0 1px #00BFFF;
+
+        .soft-shadow-banner {
+            box-shadow: 0 10px 30px -4px rgba(0, 51, 102, 0.06), 0 4px 12px -2px rgba(0, 51, 102, 0.03);
         }
-        /* Component Animations */
-        .tech-btn {
-            transition: all 200ms ease-out;
+
+        .soft-shadow-modal {
+            box-shadow: 0 24px 64px -12px rgba(15, 23, 42, 0.18);
         }
-        .tech-btn:active {
-            transform: translateY(1px);
-        }
-        .tech-card {
-            transition: all 200ms ease-out;
-        }
-        .tech-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border-color: #003366;
-            transform: translateY(-2px);
-        }
+
+        /* Animations */
         .fade-in {
-            animation: fadeIn 420ms ease-out forwards;
+            animation: fadeIn 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(16px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-thumb { background: #C0C0C0; border-radius: 8px; }
-        
-        /* Custom Slider Styling */
+        ::-webkit-scrollbar-track { background: #F8FAFC; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+        /* Modern Range Slider */
         input[type=range] {
             -webkit-appearance: none;
             width: 100%;
@@ -93,115 +86,128 @@
         }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
+            height: 18px;
+            width: 18px;
             border-radius: 50%;
             background: #003366;
             cursor: pointer;
             margin-top: -6px;
-            border: 2px solid #00BFFF;
+            box-shadow: 0 2px 8px rgba(0, 51, 102, 0.35);
+            border: 2px solid #FFFFFF;
+            transition: transform 0.15s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
         }
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
-            height: 4px;
+            height: 6px;
             cursor: pointer;
-            background: #E0E0E0;
-            border-radius: 2px;
+            background: #E2E8F0;
+            border-radius: 9999px;
         }
     </style>
 </head>
-<body class="min-h-[100dvh] flex flex-col selection:bg-surface selection:text-primary">
+<body class="min-h-[100dvh] flex flex-col bg-white selection:bg-sky-500 selection:text-white">
 
     <!-- Top Data Bar -->
-    <div class="bg-primary text-neutral text-xs py-1.5 px-4 flex justify-between items-center border-b border-accent font-mono">
+    <div class="bg-primary text-slate-200 text-xs py-2 px-6 flex justify-between items-center font-mono border-b border-primaryDark">
         <div class="flex items-center gap-2">
-            <i data-lucide="shield-check" class="w-3 h-3 text-success"></i>
-            <span>สถานะระบบ: ปลอดภัย | เชื่อมต่อโหนดสำเร็จ</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[11px] text-slate-300 font-sans">สถานะระบบ: ปลอดภัย | เชื่อมต่อเครือข่าย Escrow สำเร็จ</span>
         </div>
-        <div class="flex items-center gap-4 hidden sm:flex">
-            <span>โหนด: ประเทศไทย</span>
-            <div class="flex items-center gap-2 border-l border-accent pl-4 ml-2">
-                <div class="w-5 h-5 bg-surface text-primary flex items-center justify-center rounded text-[10px] font-bold">NK</div>
-                <div class="flex flex-col leading-none gap-0.5">
-                    <span class="text-tertiary font-sans">น้องคิม (User)</span>
-                    <span class="text-[9px] text-surface">สถานะ: ACTIVE</span>
+        <div class="flex items-center gap-4 hidden sm:flex text-[11px]">
+            <span class="text-slate-300">Node: ประเทศไทย (TH-01)</span>
+            <div class="flex items-center gap-2 border-l border-white/15 pl-4 ml-2">
+                <div class="w-5 h-5 bg-sky-400 text-primary flex items-center justify-center rounded-full text-[10px] font-bold">NK</div>
+                <div class="flex flex-col leading-none">
+                    <span class="text-white font-sans font-medium">น้องคิม</span>
+                    <span class="text-[9px] text-sky-300">ACTIVE MEMBER</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Main Navbar -->
-    <nav class="bg-tertiary border-b tech-border sticky top-0 z-40">
-        <div class="max-w-[1280px] mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Main Navbar (Clean, White, Refined) -->
+    <nav class="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-slate-100">
+        <div class="max-w-[1280px] mx-auto px-6 h-18 py-3.5 flex items-center justify-between">
             
-            <div class="flex items-center gap-3 cursor-pointer" onclick="resetToHome()">
-                <div class="w-8 h-8 bg-primary rounded flex items-center justify-center text-tertiary">
-                    <i data-lucide="cpu" class="w-5 h-5"></i>
+            <!-- Logo Section -->
+            <div class="flex items-center gap-3 cursor-pointer select-none" onclick="resetToHome()">
+                <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center text-white shadow-sm">
+                    <i data-lucide="layers" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-xl font-bold tracking-tight text-primary">RENTIX</h1>
-                        <span class="bg-surface/10 text-surface text-[10px] px-1.5 py-0.5 rounded font-mono border border-surface/30 hidden sm:inline-block">PROTOTYPE V3</span>
-                    </div>
-                    <p class="text-[10px] text-accent font-mono hidden sm:block">แพลตฟอร์มเช่าอุปกรณ์ไอที P2P</p>
+                    <h1 class="text-xl font-extrabold tracking-tight text-primary leading-none">RENTIX</h1>
+                    <p class="text-[10px] text-slate-400 font-sans mt-0.5 hidden sm:block">แพลตฟอร์มเช่าอุปกรณ์ไอที P2P ระดับพรีเมียม</p>
                 </div>
             </div>
 
+            <!-- Thinner, Refined Search Bar -->
             <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
-                <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-secondary"></i>
+                <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-2.5 text-slate-400"></i>
                 <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="ค้นหา: กล้อง, MacBook, โดรน..." 
-                    class="w-full bg-[#F8FAFC] text-accent text-sm pl-9 pr-4 py-2 rounded tech-border focus:outline-none focus:border-primary font-mono transition-colors">
+                    class="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-slate-700 text-xs pl-10 pr-4 py-2 rounded-full border border-slate-200/80 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 font-sans transition-all">
             </div>
 
-            <div class="flex items-center gap-4">
-                <div class="bg-[#F8FAFC] p-1 rounded tech-border flex text-xs font-medium">
-                    <button id="btnRenter" onclick="switchMode('renter')" class="px-4 py-1.5 rounded bg-primary text-tertiary tech-btn">
+            <!-- Mode Switcher -->
+            <div class="flex items-center gap-3">
+                <div class="bg-slate-100 p-1 rounded-full flex text-xs font-medium">
+                    <button id="btnRenter" onclick="switchMode('renter')" class="px-4 py-1.5 rounded-full bg-primary text-white shadow-sm transition-all font-sans">
                         โหมดผู้เช่า
                     </button>
-                    <button id="btnLender" onclick="switchMode('lender')" class="px-4 py-1.5 rounded text-accent hover:bg-neutral tech-btn flex items-center gap-1">
-                        <i data-lucide="wallet" class="w-3 h-3"></i> ศูนย์ปล่อยเช่า
+                    <button id="btnLender" onclick="switchMode('lender')" class="px-4 py-1.5 rounded-full text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5 font-sans">
+                        <i data-lucide="wallet" class="w-3.5 h-3.5"></i> ศูนย์ปล่อยเช่า
                     </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-grow grid-bg py-8">
+    <!-- MAIN CONTENT (Clean White Background) -->
+    <main class="flex-grow bg-white py-8">
         
         <!-- ========================================== -->
         <!-- RENTER VIEW -->
         <!-- ========================================== -->
         <div id="renterView" class="max-w-[1280px] mx-auto px-6 space-y-8 fade-in block">
             
-            <!-- Hero / Search Configuration -->
-            <div class="bg-tertiary rounded tech-border p-6 shadow-sm flex flex-col lg:flex-row gap-8 items-start border-l-4 border-l-surface relative overflow-hidden">
+            <!-- Hero / Search Banner (Borderless with Soft Diffused Shadow) -->
+            <div class="bg-white rounded-3xl soft-shadow-banner p-8 lg:p-10 flex flex-col lg:flex-row gap-8 items-start relative overflow-hidden border border-slate-100/60">
                 <div class="flex-1 space-y-4 relative z-10">
-                    <div class="inline-flex items-center gap-2 border border-surface/50 px-3 py-1 rounded text-xs text-primary font-mono bg-blue-50">
-                        <i data-lucide="zap" class="w-3 h-3"></i>
+                    <div class="inline-flex items-center gap-1.5 bg-sky-50 border border-sky-100 px-3 py-1 rounded-full text-xs text-sky-700 font-mono font-medium">
+                        <i data-lucide="zap" class="w-3.5 h-3.5 text-sky-500"></i>
                         <span>P2P MATCHING ALGORITHM OPTIMIZED</span>
                     </div>
-                    <h2 class="text-3xl font-bold text-primary">เช่าอุปกรณ์ IT & กล้องระดับโปร<br>ในราคาสบายกระเป๋า</h2>
-                    <p class="text-sm text-accent max-w-2xl font-light">
+                    <h2 class="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        เช่าอุปกรณ์ IT & กล้องระดับโปร<br>ในราคาสบายกระเป๋า
+                    </h2>
+                    <p class="text-sm text-slate-600 max-w-2xl font-normal leading-relaxed">
                         ไม่ต้องซื้อของแพงเพื่อใช้งานสั้นๆ เชื่อมต่อผู้เช่ากับผู้ปล่อยเช่าในละแวกเดียวกัน ปลอดภัยด้วยระบบมัดจำ Escrow ปรับแต่งระยะเวลาเช่าได้ตามใจชอบ
                     </p>
                     
-                    <div class="pt-2 flex flex-wrap gap-6 text-xs text-accent font-mono">
-                        <div class="flex items-center gap-1"><i data-lucide="check-circle" class="w-3 h-3 text-success"></i> 1,200+ รายการ</div>
-                        <div class="flex items-center gap-1"><i data-lucide="shield" class="w-3 h-3 text-surface"></i> 100% คุ้มครองอุบัติเหตุ</div>
-                        <div class="flex items-center gap-1"><i data-lucide="user-check" class="w-3 h-3 text-primary"></i> ผู้ใช้งานจริงในระบบ</div>
+                    <div class="pt-3 flex flex-wrap gap-6 text-xs text-slate-600 font-sans">
+                        <div class="flex items-center gap-1.5 font-medium">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> 1,200+ รายการพร้อมเช่า
+                        </div>
+                        <div class="flex items-center gap-1.5 font-medium">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-sky-500"></i> 100% คุ้มครองอุบัติเหตุ
+                        </div>
+                        <div class="flex items-center gap-1.5 font-medium">
+                            <i data-lucide="user-check" class="w-4 h-4 text-primary"></i> ยืนยันตัวตนผู้ใช้จริง
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Quick Advanced Filter -->
-                <div class="w-full lg:w-80 bg-[#F8FAFC] p-4 rounded tech-border space-y-3 font-mono text-xs relative z-10">
-                    <div class="border-b tech-border pb-2 mb-2 flex items-center justify-between">
-                        <span class="font-bold text-primary">ระบบค้นหาด่วน</span>
-                        <i data-lucide="sliders-horizontal" class="w-3 h-3 text-secondary"></i>
+                <!-- Quick Advanced Filter (Refined Borderless Card) -->
+                <div class="w-full lg:w-80 bg-slate-50/80 rounded-2xl p-5 space-y-3.5 text-xs relative z-10 border border-slate-100">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-200">
+                        <span class="font-bold text-slate-800 text-xs font-sans">ระบบค้นหาด่วน</span>
+                        <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5 text-slate-400"></i>
                     </div>
                     <div>
-                        <label class="block text-accent mb-1">หมวดหมู่อุปกรณ์</label>
-                        <select id="heroCategorySelect" onchange="applyFilters()" class="w-full bg-tertiary tech-border p-2 rounded focus:outline-none focus:border-primary">
+                        <label class="block text-slate-600 mb-1 font-medium">หมวดหมู่อุปกรณ์</label>
+                        <select id="heroCategorySelect" onchange="applyFilters()" class="w-full bg-white border border-slate-200 p-2.5 rounded-xl focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition-all text-slate-700">
                             <option value="all">ทุกหมวดหมู่สินค้า</option>
                             <option value="camera">กล้องถ่ายรูป & เลนส์</option>
                             <option value="laptop">คอมพิวเตอร์ & แท็บเล็ต</option>
@@ -210,49 +216,46 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-accent mb-1">พื้นที่ / Node ใกล้เคียง</label>
-                        <select id="heroLocationSelect" onchange="applyFilters()" class="w-full bg-tertiary tech-border p-2 rounded focus:outline-none focus:border-primary">
+                        <label class="block text-slate-600 mb-1 font-medium">พื้นที่ / Node ใกล้เคียง</label>
+                        <select id="heroLocationSelect" onchange="applyFilters()" class="w-full bg-white border border-slate-200 p-2.5 rounded-xl focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100 transition-all text-slate-700">
                             <option value="all">ทุกพื้นที่ทั่วประเทศ</option>
                             <option value="ชลบุรี">Node: ชลบุรี / ม.บูรพา</option>
                             <option value="กรุงเทพฯ">Node: กรุงเทพฯ (สยาม/ลาดกระบัง)</option>
                             <option value="เชียงใหม่">Node: เชียงใหม่ / มช.</option>
                         </select>
                     </div>
-                    <button onclick="applyFilters()" class="w-full bg-primary text-tertiary py-2 rounded font-medium tech-btn flex items-center justify-center gap-2 hover:bg-primary/90 mt-2">
-                        <i data-lucide="search" class="w-3 h-3"></i> ค้นหาอุปกรณ์
+                    <button onclick="applyFilters()" class="w-full bg-primary hover:bg-primaryDark text-white py-2.5 rounded-xl font-medium transition-all shadow-sm flex items-center justify-center gap-2 mt-2">
+                        <i data-lucide="search" class="w-3.5 h-3.5"></i> ค้นหาอุปกรณ์
                     </button>
                 </div>
-                
-                <!-- Decorative background icon -->
-                <i data-lucide="cpu" class="absolute -bottom-10 -right-10 w-64 h-64 text-surface opacity-5 z-0"></i>
             </div>
 
-            <!-- Catalog Controls -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b tech-border pb-4">
+            <!-- Catalog Controls (Clean Capsules & Sort) -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-2">
                 
-                <!-- Category Pills -->
-                <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 text-xs font-mono no-scrollbar">
-                    <button onclick="setCategoryFilter('all')" id="cat-all" class="cat-btn px-4 py-1.5 rounded-full bg-primary text-tertiary tech-btn whitespace-nowrap">
+                <!-- Category Pills (Capsules) -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 text-xs no-scrollbar">
+                    <button onclick="setCategoryFilter('all')" id="cat-all" class="cat-btn px-4 py-2 rounded-full bg-primary text-white font-medium shadow-sm transition-all whitespace-nowrap">
                         ทั้งหมด
                     </button>
-                    <button onclick="setCategoryFilter('camera')" id="cat-camera" class="cat-btn px-4 py-1.5 rounded-full bg-tertiary border tech-border text-accent hover:bg-neutral tech-btn whitespace-nowrap">
-                        <i data-lucide="camera" class="w-3 h-3 inline mr-1"></i> กล้อง/เลนส์
+                    <button onclick="setCategoryFilter('camera')" id="cat-camera" class="cat-btn px-4 py-2 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 font-medium transition-all whitespace-nowrap">
+                        <i data-lucide="camera" class="w-3.5 h-3.5 inline mr-1 text-slate-400"></i> กล้อง/เลนส์
                     </button>
-                    <button onclick="setCategoryFilter('laptop')" id="cat-laptop" class="cat-btn px-4 py-1.5 rounded-full bg-tertiary border tech-border text-accent hover:bg-neutral tech-btn whitespace-nowrap">
-                        <i data-lucide="laptop" class="w-3 h-3 inline mr-1"></i> คอมพิวเตอร์
+                    <button onclick="setCategoryFilter('laptop')" id="cat-laptop" class="cat-btn px-4 py-2 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 font-medium transition-all whitespace-nowrap">
+                        <i data-lucide="laptop" class="w-3.5 h-3.5 inline mr-1 text-slate-400"></i> คอมพิวเตอร์
                     </button>
-                    <button onclick="setCategoryFilter('drone')" id="cat-drone" class="cat-btn px-4 py-1.5 rounded-full bg-tertiary border tech-border text-accent hover:bg-neutral tech-btn whitespace-nowrap">
-                        <i data-lucide="rocket" class="w-3 h-3 inline mr-1"></i> โดรน
+                    <button onclick="setCategoryFilter('drone')" id="cat-drone" class="cat-btn px-4 py-2 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 font-medium transition-all whitespace-nowrap">
+                        <i data-lucide="rocket" class="w-3.5 h-3.5 inline mr-1 text-slate-400"></i> โดรน
                     </button>
-                    <button onclick="setCategoryFilter('audio')" id="cat-audio" class="cat-btn px-4 py-1.5 rounded-full bg-tertiary border tech-border text-accent hover:bg-neutral tech-btn whitespace-nowrap">
-                        <i data-lucide="mic" class="w-3 h-3 inline mr-1"></i> อุปกรณ์เสียง
+                    <button onclick="setCategoryFilter('audio')" id="cat-audio" class="cat-btn px-4 py-2 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 font-medium transition-all whitespace-nowrap">
+                        <i data-lucide="mic" class="w-3.5 h-3.5 inline mr-1 text-slate-400"></i> อุปกรณ์เสียง
                     </button>
                 </div>
 
                 <!-- Sort & Count -->
-                <div class="flex items-center justify-between md:justify-end gap-3 text-xs text-accent font-mono">
-                    <span>พบ <strong id="productCountText" class="text-primary">0</strong> รายการ</span>
-                    <select id="sortSelect" onchange="sortProducts()" class="bg-tertiary border tech-border text-primary py-1.5 px-3 rounded focus:outline-none">
+                <div class="flex items-center justify-between md:justify-end gap-3 text-xs text-slate-500 font-sans">
+                    <span>พบ <strong id="productCountText" class="text-primary font-bold">0</strong> รายการ</span>
+                    <select id="sortSelect" onchange="sortProducts()" class="bg-white border border-slate-200 text-slate-700 py-2 px-3 rounded-xl focus:outline-none focus:border-sky-500 text-xs shadow-sm">
                         <option value="popular">เรียงตาม: ยอดนิยม</option>
                         <option value="price-asc">ราคา: ต่ำไปสูง</option>
                         <option value="price-desc">ราคา: สูงไปต่ำ</option>
@@ -260,41 +263,53 @@
                 </div>
             </div>
 
-            <!-- Dynamic Product Grid -->
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic Product Grid (Borderless Cards with High-Res Photos & Soft Diffused Shadow) -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 pt-2">
                 <!-- Products injected by JS -->
             </div>
         </div>
 
         <!-- ========================================== -->
-        <!-- LENDER VIEW -->
+        <!-- LENDER VIEW (Lender Studio) -->
         <!-- ========================================== -->
-        <div id="lenderView" class="hidden max-w-[1280px] mx-auto px-6 space-y-6 fade-in">
+        <div id="lenderView" class="hidden max-w-[1280px] mx-auto px-6 space-y-8 fade-in">
             
-            <div class="bg-primary rounded tech-border p-6 text-tertiary flex flex-col sm:flex-row justify-between items-center gap-4 relative overflow-hidden">
-                <div class="relative z-10">
-                    <h2 class="text-2xl font-bold font-mono text-surface mb-1">LENDER STUDIO</h2>
-                    <p class="text-sm text-tertiary/80 font-light">เปลี่ยนอุปกรณ์ไอทีที่ตั้งทิ้งไว้ ให้กลายเป็นรายได้สม่ำเสมอ พร้อมระบบคุ้มครองความเสียหาย 100%</p>
+            <!-- Redesigned Studio Banner (Deep Blue Gradient & Soft Ambient Depth) -->
+            <div class="rounded-3xl bg-gradient-to-r from-[#001E3D] via-[#003366] to-[#004D99] p-8 lg:p-10 text-white shadow-[0_12px_36px_rgba(0,51,102,0.18)] flex flex-col sm:flex-row justify-between items-center gap-6 relative overflow-hidden">
+                <!-- Ambient blur lighting effects -->
+                <div class="absolute -right-8 -bottom-8 w-60 h-60 bg-sky-400/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute left-1/4 -top-8 w-48 h-48 bg-blue-300/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div class="relative z-10 space-y-2">
+                    <div class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-mono text-sky-200 border border-white/10">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-sky-300"></i>
+                        <span>PASSIVE INCOME ENGINE</span>
+                    </div>
+                    <h2 class="text-3xl font-extrabold tracking-tight">LENDER STUDIO</h2>
+                    <p class="text-sm text-slate-200 font-light max-w-xl">เปลี่ยนอุปกรณ์ไอทีที่ตั้งทิ้งไว้ ให้กลายเป็นรายได้สม่ำเสมอ พร้อมระบบคุ้มครองความเสียหาย 100%</p>
                 </div>
-                <button onclick="openListGearModal()" class="bg-surface text-primary font-bold px-5 py-2.5 rounded tech-btn text-sm whitespace-nowrap z-10 flex items-center gap-2">
-                    <i data-lucide="plus-circle" class="w-4 h-4"></i> ลงประกาศอุปกรณ์
+                
+                <button id="btnOpenListGear" type="button" onclick="openListGearModal()" class="relative z-30 cursor-pointer bg-white text-slate-900 hover:bg-sky-50 font-semibold px-6 py-3 rounded-2xl shadow-lg shadow-black/10 transition-all text-sm whitespace-nowrap flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
+                    <i data-lucide="plus-circle" class="w-4 h-4 text-sky-600"></i> ลงประกาศอุปกรณ์
                 </button>
-                <i data-lucide="database" class="absolute -right-4 -top-4 w-32 h-32 text-tertiary opacity-10"></i>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Lender Studio Grid (2 Main Borderless Cards) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
-                <!-- Earnings Estimator -->
-                <div class="bg-tertiary rounded tech-border p-6 space-y-5 h-fit sticky top-24">
-                    <h3 class="font-bold text-primary border-b tech-border pb-2 flex items-center justify-between">
-                        <span class="flex items-center gap-2"><i data-lucide="calculator" class="w-4 h-4"></i> คำนวณรายได้</span>
-                        <span class="text-[10px] text-surface font-mono bg-blue-50 px-2 py-0.5 rounded border border-surface">SIMULATOR</span>
-                    </h3>
+                <!-- Left Card: Earnings Estimator (Precision Tool Card) -->
+                <div class="bg-white rounded-3xl soft-card p-7 space-y-6 h-fit sticky top-24 border border-slate-100">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                        <h3 class="font-bold text-slate-900 flex items-center gap-2 text-sm">
+                            <i data-lucide="calculator" class="w-4 h-4 text-sky-600"></i> คำนวณรายได้
+                        </h3>
+                        <span class="text-[10px] text-sky-600 font-mono bg-sky-50 px-2 py-0.5 rounded-full font-semibold border border-sky-100">SIMULATOR</span>
+                    </div>
                     
-                    <div class="space-y-4 text-xs font-mono text-accent">
+                    <div class="space-y-4 text-xs font-sans text-slate-600">
                         <div>
-                            <label class="block mb-1">ประเภทอุปกรณ์</label>
-                            <select id="lenderItemType" onchange="calculateLenderEarnings()" class="w-full bg-[#F8FAFC] border tech-border p-2 rounded focus:outline-none focus:border-primary">
+                            <label class="block mb-1.5 font-medium text-slate-700">ประเภทอุปกรณ์</label>
+                            <select id="lenderItemType" onchange="calculateLenderEarnings()" class="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-xl focus:outline-none focus:border-sky-500 font-sans text-slate-800">
                                 <option value="1200">กล้องโปร (เช่น A7IV) - 1,200/วัน</option>
                                 <option value="1500">โน้ตบุ๊ก (เช่น MacBook) - 1,500/วัน</option>
                                 <option value="850">โดรน (เช่น DJI Mini) - 850/วัน</option>
@@ -304,74 +319,86 @@
 
                         <div>
                             <div class="flex justify-between mb-2">
-                                <label>จำนวนวันปล่อยเช่า/เดือน</label>
-                                <span id="lenderDaysText" class="font-bold text-primary">8 วัน</span>
+                                <label class="font-medium text-slate-700">จำนวนวันปล่อยเช่า/เดือน</label>
+                                <span id="lenderDaysText" class="font-bold text-primary font-mono text-sm">8 วัน</span>
                             </div>
                             <input type="range" id="lenderDaysSlider" min="1" max="25" value="8" oninput="calculateLenderEarnings()">
                         </div>
 
-                        <div class="bg-[#F8FAFC] p-4 rounded tech-border text-center space-y-2 mt-4">
-                            <p class="text-accent text-[10px]">รายได้สุทธิประมาณการ (หักค่าธรรมเนียม 15%)</p>
-                            <p id="lenderNetEarnings" class="text-2xl font-black text-primary">THB 8,160</p>
-                            <p class="text-[9px] text-secondary">* คำนวณจากสถิติความต้องการในระบบปัจจุบัน</p>
+                        <div class="bg-gradient-to-br from-slate-50 to-sky-50/40 p-5 rounded-2xl text-center space-y-1.5 mt-4 border border-slate-100">
+                            <p class="text-slate-500 text-[11px]">รายได้สุทธิประมาณการ (หักค่าธรรมเนียม 15%)</p>
+                            <p id="lenderNetEarnings" class="text-3xl font-black text-primary font-mono tracking-tight">THB 8,160</p>
+                            <p class="text-[10px] text-slate-400">* คำนวณจากสถิติความต้องการในระบบปัจจุบัน</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Active Listings Table -->
-                <div class="lg:col-span-2 bg-tertiary rounded tech-border p-6 overflow-x-auto">
-                    <div class="flex items-center justify-between border-b tech-border pb-3 mb-4">
-                        <h3 class="font-bold text-primary flex items-center gap-2">
-                            <i data-lucide="server" class="w-4 h-4"></i> รายการอุปกรณ์ที่กำลังออนไลน์
+                <!-- Right Card: Active Listings Table (Clean Rows with Thumbnails & Status Dots) -->
+                <div class="lg:col-span-2 bg-white rounded-3xl soft-card p-7 overflow-x-auto border border-slate-100">
+                    <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                        <h3 class="font-bold text-slate-900 flex items-center gap-2 text-sm">
+                            <i data-lucide="server" class="w-4 h-4 text-sky-600"></i> รายการอุปกรณ์ที่กำลังออนไลน์
                         </h3>
-                        <span class="bg-blue-50 text-primary border border-primary/20 text-[10px] px-2 py-0.5 rounded font-mono">3 ACTIVE NODES</span>
+                        <span class="bg-sky-50 text-sky-700 font-mono text-[11px] px-2.5 py-0.5 rounded-full font-semibold border border-sky-100">3 ACTIVE NODES</span>
                     </div>
 
-                    <table class="w-full text-left text-xs font-mono min-w-[500px]">
-                        <thead class="text-secondary border-b tech-border">
+                    <table class="w-full text-left text-xs font-sans min-w-[520px]">
+                        <thead class="text-slate-400 border-b border-slate-100 text-[11px]">
                             <tr>
-                                <th class="pb-2 font-normal">รหัส / อุปกรณ์</th>
-                                <th class="pb-2 font-normal">ราคา/วัน</th>
-                                <th class="pb-2 font-normal">สถานะ</th>
-                                <th class="pb-2 font-normal text-right">รายได้สะสม</th>
+                                <th class="pb-3 font-normal">รหัส / อุปกรณ์</th>
+                                <th class="pb-3 font-normal">ราคา/วัน</th>
+                                <th class="pb-3 font-normal">สถานะ</th>
+                                <th class="pb-3 font-normal text-right">รายได้สะสม</th>
                             </tr>
                         </thead>
-                        <tbody class="text-accent divide-y tech-border" id="lenderGearTable">
+                        <tbody class="text-slate-700 divide-y divide-slate-100" id="lenderGearTable">
                             <tr>
-                                <td class="py-3 flex items-center gap-2 font-sans font-medium text-primary">
-                                    <div class="bg-[#F8FAFC] p-1.5 rounded border tech-border"><i data-lucide="camera" class="w-4 h-4 text-primary"></i></div>
+                                <td class="py-3.5 flex items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=200&q=80" alt="Sony A7 IV" class="w-11 h-11 rounded-xl object-cover shadow-sm">
                                     <div>
-                                        <span>Sony A7 IV + FE 24-70mm</span>
-                                        <span class="block text-[9px] text-secondary font-mono mt-0.5">ID: CAM-001</span>
+                                        <span class="font-semibold text-slate-900 text-xs block">Sony A7 IV + FE 24-70mm</span>
+                                        <span class="text-[10px] text-slate-400 font-mono">ID: CAM-001</span>
                                     </div>
                                 </td>
-                                <td class="py-3">1,200</td>
-                                <td class="py-3"><span class="text-success flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> พร้อมเช่า</span></td>
-                                <td class="py-3 text-right text-primary font-bold">14,400</td>
+                                <td class="py-3.5 font-mono">1,200</td>
+                                <td class="py-3.5">
+                                    <span class="text-emerald-600 font-medium flex items-center gap-1.5 text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> พร้อมเช่า
+                                    </span>
+                                </td>
+                                <td class="py-3.5 text-right text-primary font-bold font-mono text-sm">14,400</td>
                             </tr>
                             <tr>
-                                <td class="py-3 flex items-center gap-2 font-sans font-medium text-primary">
-                                    <div class="bg-[#F8FAFC] p-1.5 rounded border tech-border"><i data-lucide="rocket" class="w-4 h-4 text-primary"></i></div>
+                                <td class="py-3.5 flex items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=200&q=80" alt="DJI Mini 4 Pro" class="w-11 h-11 rounded-xl object-cover shadow-sm">
                                     <div>
-                                        <span>DJI Mini 4 Pro Fly More</span>
-                                        <span class="block text-[9px] text-secondary font-mono mt-0.5">ID: DR-092</span>
+                                        <span class="font-semibold text-slate-900 text-xs block">DJI Mini 4 Pro Fly More</span>
+                                        <span class="text-[10px] text-slate-400 font-mono">ID: DR-092</span>
                                     </div>
                                 </td>
-                                <td class="py-3">850</td>
-                                <td class="py-3"><span class="text-warning flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ถูกเช่าอยู่</span></td>
-                                <td class="py-3 text-right text-primary font-bold">6,800</td>
+                                <td class="py-3.5 font-mono">850</td>
+                                <td class="py-3.5">
+                                    <span class="text-amber-600 font-medium flex items-center gap-1.5 text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> ถูกเช่าอยู่
+                                    </span>
+                                </td>
+                                <td class="py-3.5 text-right text-primary font-bold font-mono text-sm">6,800</td>
                             </tr>
                             <tr>
-                                <td class="py-3 flex items-center gap-2 font-sans font-medium text-primary">
-                                    <div class="bg-[#F8FAFC] p-1.5 rounded border tech-border"><i data-lucide="laptop" class="w-4 h-4 text-primary"></i></div>
+                                <td class="py-3.5 flex items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=200&q=80" alt="MacBook Pro" class="w-11 h-11 rounded-xl object-cover shadow-sm">
                                     <div>
-                                        <span>MacBook Pro M3 Pro 16"</span>
-                                        <span class="block text-[9px] text-secondary font-mono mt-0.5">ID: MAC-088</span>
+                                        <span class="font-semibold text-slate-900 text-xs block">MacBook Pro M3 Pro 16"</span>
+                                        <span class="text-[10px] text-slate-400 font-mono">ID: MAC-088</span>
                                     </div>
                                 </td>
-                                <td class="py-3">1,500</td>
-                                <td class="py-3"><span class="text-success flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> พร้อมเช่า</span></td>
-                                <td class="py-3 text-right text-primary font-bold">9,000</td>
+                                <td class="py-3.5 font-mono">1,500</td>
+                                <td class="py-3.5">
+                                    <span class="text-emerald-600 font-medium flex items-center gap-1.5 text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> พร้อมเช่า
+                                    </span>
+                                </td>
+                                <td class="py-3.5 text-right text-primary font-bold font-mono text-sm">9,000</td>
                             </tr>
                         </tbody>
                     </table>
@@ -381,91 +408,110 @@
     </main>
 
     <!-- ========================================== -->
-    <!-- MODAL 1: BOOKING & CALCULATOR -->
+    <!-- MODAL 1: BOOKING & CALCULATOR (Refined) -->
     <!-- ========================================== -->
-    <div id="bookingModal" class="fixed inset-0 bg-accent/90 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-tertiary rounded-xl tech-border w-full max-w-2xl shadow-2xl fade-in overflow-hidden max-h-[90vh] flex flex-col">
+    <div id="bookingModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl soft-shadow-modal w-full max-w-2xl fade-in overflow-hidden max-h-[92vh] flex flex-col relative border border-slate-100">
             
-            <div class="p-4 border-b tech-border flex justify-between items-start bg-primary text-tertiary">
-                <div>
-                    <span id="modalCategoryBadge" class="inline-block bg-surface/20 text-surface border border-surface/50 text-[10px] px-2 py-0.5 rounded font-mono mb-2">
-                        CATEGORY
-                    </span>
-                    <h3 id="modalTitle" class="font-bold text-lg sm:text-xl">Product Name</h3>
-                    <p id="modalLocation" class="text-xs text-tertiary/70 font-mono mt-1 flex items-center gap-1">📍 Location</p>
+            <!-- Close Button (Absolute Top Right) -->
+            <button type="button" onclick="closeModal('bookingModal')" class="absolute top-5 right-5 z-20 text-slate-400 hover:text-slate-700 hover:bg-slate-100 p-2 rounded-full transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Modal Header (Full Width Top Banner) -->
+            <div class="p-6 sm:p-7 border-b border-slate-100 bg-slate-50/60 pr-16">
+                <div class="flex items-center gap-4">
+                    <img id="modalProductImage" src="" alt="" class="w-20 h-20 rounded-2xl object-cover shadow-sm border border-slate-100 flex-shrink-0">
+                    <div class="min-w-0">
+                        <span id="modalCategoryBadge" class="inline-block bg-sky-50 text-sky-700 text-[10px] px-2.5 py-0.5 rounded-full font-mono font-semibold mb-1.5 border border-sky-100">
+                            CATEGORY
+                        </span>
+                        <h3 id="modalTitle" class="font-bold text-slate-900 text-base sm:text-xl leading-tight truncate">Product Name</h3>
+                        <p id="modalLocation" class="text-xs text-slate-500 font-sans mt-1 flex items-center gap-1.5">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-sky-500 flex-shrink-0"></i>
+                            <span id="modalLocationText">Location</span>
+                        </p>
+                    </div>
                 </div>
-                <button onclick="closeModal('bookingModal')" class="hover:text-surface text-secondary transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
             </div>
             
-            <div class="p-6 font-mono text-xs space-y-6 overflow-y-auto custom-scrollbar">
+            <!-- Modal Body (Spacious Content) -->
+            <div class="p-6 sm:p-7 text-xs space-y-6 overflow-y-auto">
                 
-                <!-- Lender Info -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 bg-[#F8FAFC] rounded tech-border">
+                <!-- Lender Trust Info Card -->
+                <div class="grid grid-cols-3 gap-3 p-4 bg-slate-50/80 rounded-2xl border border-slate-100 text-center sm:text-left">
                     <div>
-                        <span class="text-secondary block mb-1">LENDER_NODE</span>
-                        <div class="font-bold text-primary flex items-center gap-1 text-sm font-sans">
+                        <span class="text-slate-400 block mb-0.5 text-[10px] font-mono">LENDER</span>
+                        <div class="font-bold text-slate-800 flex items-center justify-center sm:justify-start gap-1 text-xs sm:text-sm">
                             <span id="modalLenderName">Name</span>
-                            <i data-lucide="badge-check" class="w-4 h-4 text-surface"></i>
+                            <i data-lucide="badge-check" class="w-3.5 h-3.5 text-sky-500 flex-shrink-0"></i>
                         </div>
                     </div>
                     <div>
-                        <span class="text-secondary block mb-1">TRUST_SCORE</span>
-                        <div class="font-bold text-accent flex items-center gap-1 text-sm">
-                            <i data-lucide="star" class="w-4 h-4 text-warning fill-warning"></i>
+                        <span class="text-slate-400 block mb-0.5 text-[10px] font-mono">TRUST SCORE</span>
+                        <div class="font-bold text-amber-500 flex items-center justify-center sm:justify-start gap-1 text-xs sm:text-sm font-mono">
+                            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 flex-shrink-0"></i>
                             <span id="modalRatingText">4.95</span>
                         </div>
                     </div>
                     <div>
-                        <span class="text-secondary block mb-1">DELIVERY_PROTOCOL</span>
-                        <div class="font-bold text-accent text-sm font-sans" id="modalDeliveryType">Delivery Info</div>
+                        <span class="text-slate-400 block mb-0.5 text-[10px] font-mono">DELIVERY</span>
+                        <div class="font-bold text-slate-700 text-xs sm:text-sm truncate" id="modalDeliveryType">Delivery Info</div>
                     </div>
                 </div>
 
-                <!-- Rental Config -->
-                <div class="space-y-5 border-t tech-border pt-5">
-                    <h4 class="font-bold text-primary flex items-center gap-2 font-sans text-sm">
-                        <i data-lucide="calendar-clock" class="w-4 h-4"></i> ตั้งค่าระยะเวลาเช่า
-                    </h4>
+                <!-- Rental Duration Slider -->
+                <div class="space-y-3 pt-1">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-slate-900 flex items-center gap-2 text-sm">
+                            <i data-lucide="calendar-clock" class="w-4 h-4 text-sky-600"></i> กำหนดระยะเวลาเช่า
+                        </h4>
+                        <span class="text-xs text-slate-600">
+                            จำนวนวันเช่า: <strong id="rentalDaysText" class="font-bold text-primary font-mono text-base ml-1">1 วัน</strong>
+                        </span>
+                    </div>
 
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-accent">ระบุจำนวนวัน (DAYS):</span>
-                            <span id="rentalDaysText" class="font-bold text-primary text-sm">1 วัน</span>
+                    <input type="range" id="rentalDaysSlider" min="1" max="14" value="1" oninput="updateBookingCalculation()">
+                    <div class="flex justify-between text-[11px] text-slate-400 font-mono">
+                        <span>1 วัน</span>
+                        <span>7 วัน</span>
+                        <span>14 วัน</span>
+                    </div>
+                </div>
+
+                <!-- Financial Breakdown (Luxurious Frosted Deep Navy Card) -->
+                <div class="bg-gradient-to-br from-[#001E3D] via-[#002D59] to-[#001830] text-white p-6 sm:p-7 rounded-3xl space-y-4 shadow-xl relative overflow-hidden border border-white/10">
+                    <div class="absolute -right-8 -bottom-8 w-44 h-44 bg-sky-400/15 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="space-y-2.5 text-xs text-slate-300">
+                        <div class="flex justify-between items-center border-b border-white/10 pb-2.5">
+                            <span class="text-slate-200">ค่าเช่ารายวัน (<span id="modalDailyRateText">1,200</span> x <span id="modalDaysCountText">1</span>)</span>
+                            <span class="font-mono text-white font-medium text-sm">THB <span id="modalSubtotalText">1,200</span></span>
                         </div>
-                        <input type="range" id="rentalDaysSlider" min="1" max="14" value="1" oninput="updateBookingCalculation()">
-                        <div class="flex justify-between text-[10px] text-secondary mt-1">
-                            <span>1 วัน</span>
-                            <span>7 วัน</span>
-                            <span>14 วัน</span>
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-200">ค่าประกันอุบัติเหตุ (8%)</span>
+                            <span class="font-mono text-white font-medium text-sm">THB <span id="modalInsuranceText">96</span></span>
+                        </div>
+
+                        <div class="flex justify-between items-center border-b border-white/10 pb-2.5">
+                            <span class="text-slate-200 font-medium">เงินมัดจำ (ESCROW DEPOSIT)</span>
+                            <span class="text-amber-300 font-mono font-bold text-sm tracking-wide">THB <span id="modalDepositText">1,500</span></span>
                         </div>
                     </div>
 
-                    <!-- Financial Breakdown -->
-                    <div class="bg-primary text-tertiary p-5 rounded tech-border space-y-3">
-                        <div class="flex justify-between text-tertiary/80 border-b border-accent pb-2">
-                            <span>ค่าเช่ารายวัน (<span id="modalDailyRateText">1,200</span> x <span id="modalDaysCountText">1</span>)</span>
-                            <span id="modalSubtotalText">1,200</span>
-                        </div>
-
-                        <div class="flex justify-between text-tertiary/70">
-                            <span>ค่าประกันอุบัติเหตุ (8%)</span>
-                            <span id="modalInsuranceText">96</span>
-                        </div>
-
-                        <div class="flex justify-between text-tertiary/70 border-b border-accent pb-2">
-                            <span>เงินมัดจำ (ESCROW DEPOSIT)</span>
-                            <span id="modalDepositText" class="text-warning">1,500</span>
-                        </div>
-
-                        <div class="flex justify-between items-center pt-2">
-                            <div>
-                                <span class="text-[10px] text-tertiary/60 block mb-0.5">ยอดชำระสุทธิ (NET TOTAL)</span>
-                                <span id="modalTotalPrice" class="text-2xl font-black text-surface">2,796</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+                        <div>
+                            <span class="text-[11px] text-slate-300 block font-sans">ยอดชำระสุทธิ (NET TOTAL)</span>
+                            <div class="flex items-baseline gap-1.5">
+                                <span id="modalTotalPrice" class="text-3xl sm:text-4xl font-black text-sky-300 font-mono tracking-tight">2,796</span>
+                                <span class="text-xs text-slate-300 font-mono">THB</span>
                             </div>
-                            <button onclick="proceedToCheckout()" class="bg-surface text-primary font-bold px-4 py-2 rounded tech-btn flex items-center gap-2">
-                                ยืนยันจอง <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </button>
                         </div>
+                        <button onclick="proceedToCheckout()" class="bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold px-8 py-3.5 rounded-full transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-sky-400/25 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
+                            <span>ยืนยันการจอง</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -473,45 +519,46 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- MODAL 2: CHECKOUT / PROMPTPAY -->
+    <!-- MODAL 2: CHECKOUT / PROMPTPAY (Refined) -->
     <!-- ========================================== -->
-    <div id="checkoutModal" class="fixed inset-0 bg-accent/90 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-tertiary rounded-xl tech-border w-full max-w-sm p-6 text-center space-y-6 shadow-2xl fade-in relative">
-            <button onclick="closeModal('checkoutModal')" class="absolute top-4 right-4 text-secondary hover:text-primary"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <div id="checkoutModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl soft-shadow-modal w-full max-w-sm p-7 text-center space-y-6 fade-in relative border border-slate-100">
+            <button onclick="closeModal('checkoutModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
             
-            <div class="w-12 h-12 bg-blue-50 text-primary border tech-border rounded-full flex items-center justify-center mx-auto">
+            <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center mx-auto border border-sky-100">
                 <i data-lucide="qr-code" class="w-6 h-6"></i>
             </div>
 
-            <div class="space-y-1 font-sans">
-                <h3 class="text-lg font-bold text-primary">ชำระเงินผ่าน PromptPay</h3>
-                <p class="text-xs text-accent font-light">สแกน QR Code เพื่อพักเงินเข้าสู่ระบบ Escrow Pool</p>
+            <div class="space-y-1">
+                <h3 class="text-lg font-bold text-slate-900">ชำระเงินผ่าน PromptPay</h3>
+                <p class="text-xs text-slate-500 font-normal">สแกน QR Code เพื่อพักเงินเข้าสู่ระบบ Escrow Pool</p>
             </div>
 
-            <div class="bg-[#F8FAFC] p-4 rounded tech-border inline-block mx-auto space-y-3 w-full">
-                <div class="w-40 h-40 bg-tertiary border-2 border-primary rounded p-2 mx-auto flex flex-col items-center justify-center">
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 inline-block mx-auto space-y-3 w-full">
+                <div class="w-40 h-40 bg-white border border-slate-200 rounded-2xl p-2.5 mx-auto flex flex-col items-center justify-center shadow-sm">
                     <!-- Tech QR Simulation -->
-                    <div class="w-full h-full bg-primary p-2 rounded flex flex-col justify-between">
+                    <div class="w-full h-full bg-primary p-2.5 rounded-xl flex flex-col justify-between">
                         <div class="flex justify-between">
-                            <div class="w-8 h-8 bg-tertiary border-4 border-primary"></div>
-                            <div class="w-8 h-8 bg-tertiary border-4 border-primary"></div>
+                            <div class="w-8 h-8 bg-white border-4 border-primary rounded-sm"></div>
+                            <div class="w-8 h-8 bg-white border-4 border-primary rounded-sm"></div>
                         </div>
-                        <div class="text-center font-black text-tertiary text-[10px] tracking-widest font-mono">
+                        <div class="text-center font-black text-white text-[10px] tracking-widest font-mono">
                             RENTIX
                         </div>
                         <div class="flex justify-between items-end">
-                            <div class="w-8 h-8 bg-tertiary border-4 border-primary"></div>
-                            <div class="w-5 h-5 bg-surface"></div>
+                            <div class="w-8 h-8 bg-white border-4 border-primary rounded-sm"></div>
+                            <div class="w-5 h-5 bg-sky-400 rounded-sm"></div>
                         </div>
                     </div>
                 </div>
                 <div class="text-xs font-mono">
-                    <span class="text-secondary block">ยอดชำระเงิน</span>
-                    <span id="qrPayAmount" class="text-xl font-bold text-primary">2,796</span>
+                    <span class="text-slate-400 block text-[10px]">ยอดชำระเงิน</span>
+                    <span id="qrPayAmount" class="text-2xl font-bold text-primary">2,796</span>
+                    <span class="text-slate-400 text-[10px] ml-1">THB</span>
                 </div>
             </div>
 
-            <button onclick="simulatePay()" class="w-full bg-primary text-tertiary font-bold py-3 rounded tech-btn text-xs font-mono">
+            <button onclick="simulatePay()" class="w-full bg-primary hover:bg-primaryDark text-white font-bold py-3 rounded-2xl transition-all text-xs shadow-md">
                 จำลองการชำระเงินสำเร็จ
             </button>
         </div>
@@ -520,26 +567,26 @@
     <!-- ========================================== -->
     <!-- MODAL 3: LIST NEW GEAR (LENDER) -->
     <!-- ========================================== -->
-    <div id="listGearModal" class="fixed inset-0 bg-accent/90 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-tertiary rounded-xl tech-border w-full max-w-lg p-6 space-y-5 shadow-2xl fade-in relative">
-            <div class="flex justify-between items-center border-b tech-border pb-3">
-                <h3 class="font-bold text-primary font-sans flex items-center gap-2">
-                    <i data-lucide="package-plus" class="w-5 h-5"></i> ลงประกาศปล่อยเช่า
+    <div id="listGearModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl soft-shadow-modal w-full max-w-lg p-7 space-y-5 fade-in relative border border-slate-100">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900 flex items-center gap-2 text-base">
+                    <i data-lucide="package-plus" class="w-5 h-5 text-sky-600"></i> ลงประกาศปล่อยเช่า
                 </h3>
-                <button onclick="closeModal('listGearModal')" class="text-secondary hover:text-primary"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <button onclick="closeModal('listGearModal')" class="text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
 
-            <form onsubmit="submitNewGear(event)" class="space-y-4 text-xs font-mono text-accent">
+            <form id="newGearForm" onsubmit="submitNewGear(event)" class="space-y-4 text-xs font-sans text-slate-700">
                 <div>
-                    <label class="block mb-1">ชื่ออุปกรณ์ / โมเดล</label>
+                    <label class="block mb-1 font-medium">ชื่ออุปกรณ์ / โมเดล</label>
                     <input type="text" id="newGearTitle" required placeholder="เช่น Sony A7C II..." 
-                        class="w-full bg-[#F8FAFC] border tech-border p-2.5 rounded focus:outline-none focus:tech-border-focus transition-shadow">
+                        class="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-xl focus:outline-none focus:border-sky-500 focus:bg-white transition-all text-slate-800">
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block mb-1">หมวดหมู่</label>
-                        <select id="newGearCategory" class="w-full bg-[#F8FAFC] border tech-border p-2.5 rounded focus:outline-none focus:tech-border-focus">
+                        <label class="block mb-1 font-medium">หมวดหมู่</label>
+                        <select id="newGearCategory" class="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-xl focus:outline-none focus:border-sky-500 focus:bg-white text-slate-800">
                             <option value="camera">กล้อง/เลนส์</option>
                             <option value="laptop">คอมพิวเตอร์</option>
                             <option value="drone">โดรน</option>
@@ -547,43 +594,43 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block mb-1">ราคาเช่า/วัน (THB)</label>
+                        <label class="block mb-1 font-medium">ราคาเช่า/วัน (THB)</label>
                         <input type="number" id="newGearPrice" required placeholder="1000" 
-                            class="w-full bg-[#F8FAFC] border tech-border p-2.5 rounded focus:outline-none focus:tech-border-focus">
+                            class="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-xl focus:outline-none focus:border-sky-500 focus:bg-white font-mono text-slate-800">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block mb-1">Node/พื้นที่นัดรับ</label>
+                        <label class="block mb-1 font-medium">Node/พื้นที่นัดรับ</label>
                         <input type="text" id="newGearLocation" required placeholder="ชลบุรี" 
-                            class="w-full bg-[#F8FAFC] border tech-border p-2.5 rounded focus:outline-none focus:tech-border-focus">
+                            class="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-xl focus:outline-none focus:border-sky-500 focus:bg-white text-slate-800">
                     </div>
                     <div>
-                        <label class="block mb-1">เงินมัดจำ (THB)</label>
+                        <label class="block mb-1 font-medium">เงินมัดจำ (THB)</label>
                         <input type="number" id="newGearDeposit" required placeholder="1500" 
-                            class="w-full bg-[#F8FAFC] border tech-border p-2.5 rounded focus:outline-none focus:tech-border-focus">
+                            class="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-xl focus:outline-none focus:border-sky-500 focus:bg-white font-mono text-slate-800">
                     </div>
                 </div>
 
-                <div class="p-3 bg-blue-50 border border-surface/30 rounded text-primary text-[10px] font-sans">
-                    <i data-lucide="info" class="w-3 h-3 inline mr-1"></i>
+                <div class="p-3 bg-sky-50 border border-sky-100 rounded-xl text-sky-800 text-[11px]">
+                    <i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-sky-600"></i>
                     รายได้สุทธิ = 85% ของค่าเช่า (แพลตฟอร์มดูแลเรื่องประกันภัย 15%)
                 </div>
 
-                <button type="submit" class="w-full bg-primary text-tertiary font-bold py-3 rounded tech-btn mt-2 font-sans flex justify-center items-center gap-2">
-                    <i data-lucide="upload-cloud" class="w-4 h-4"></i> ยืนยันเข้าระบบ
+                <button type="submit" class="w-full bg-primary hover:bg-primaryDark text-white font-bold py-3 rounded-2xl shadow-sm transition-all text-xs flex justify-center items-center gap-2 cursor-pointer">
+                    <i data-lucide="upload-cloud" class="w-4 h-4"></i> ยืนยันลงประกาศอุปกรณ์
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- CUSTOM TOAST ALERT -->
-    <div id="toastAlert" class="fixed bottom-6 right-6 bg-primary text-tertiary p-4 rounded tech-border font-mono text-xs shadow-xl hidden z-50 max-w-sm items-start gap-3 border-l-4 border-l-surface">
-        <i data-lucide="check-circle" class="w-5 h-5 text-surface mt-0.5"></i>
+    <!-- CUSTOM TOAST ALERT (Refined) -->
+    <div id="toastAlert" class="fixed bottom-6 right-6 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl font-sans text-xs hidden z-50 max-w-sm items-start gap-3 border border-slate-700/50">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 mt-0.5"></i>
         <div>
-            <p class="font-bold mb-1 text-surface" id="toastTitle">SUCCESS</p>
-            <p class="text-tertiary/80 font-sans" id="toastMsg">Message here</p>
+            <p class="font-bold text-white mb-0.5 font-mono text-[11px]" id="toastTitle">SUCCESS</p>
+            <p class="text-slate-300 font-sans" id="toastMsg">Message here</p>
         </div>
     </div>
 
@@ -591,40 +638,100 @@
     <script>
         let products = [
             {
-                id: 1, title: "Sony A7 IV + FE 24-70mm f/2.8 GM", category: "camera", categoryName: "กล้องถ่ายรูป",
-                pricePerDay: 1200, deposit: 1500, location: "ชลบุรี", locationFull: "ชลบุรี (ม.บูรพา)",
-                lenderName: "คุณจอง", rating: 4.95, reviewsCount: 18, icon: "camera",
-                badge: "ยอดนิยม", delivery: "นัดรับในพื้นที่ / ส่งด่วน"
+                id: 1, 
+                title: "Sony A7 IV + FE 24-70mm f/2.8 GM", 
+                category: "camera", 
+                categoryName: "กล้องถ่ายรูป",
+                pricePerDay: 1200, 
+                deposit: 1500, 
+                location: "ชลบุรี", 
+                locationFull: "ชลบุรี (ม.บูรพา)",
+                lenderName: "คุณจอง", 
+                rating: 4.95, 
+                reviewsCount: 18, 
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
+                badge: "ยอดนิยม", 
+                delivery: "นัดรับในพื้นที่ / ส่งด่วน"
             },
             {
-                id: 2, title: "MacBook Pro M3 Pro 16\" (36GB RAM)", category: "laptop", categoryName: "คอมพิวเตอร์",
-                pricePerDay: 1500, deposit: 3000, location: "กรุงเทพฯ", locationFull: "กรุงเทพฯ (สยาม / สามย่าน)",
-                lenderName: "คุณเมริส", rating: 4.90, reviewsCount: 12, icon: "laptop",
-                badge: "สายโค้ด", delivery: "นัดรับสยาม"
+                id: 2, 
+                title: "MacBook Pro M3 Pro 16\" (36GB RAM)", 
+                category: "laptop", 
+                categoryName: "คอมพิวเตอร์",
+                pricePerDay: 1500, 
+                deposit: 3000, 
+                location: "กรุงเทพฯ", 
+                locationFull: "กรุงเทพฯ (สยาม / สามย่าน)",
+                lenderName: "คุณเมริส", 
+                rating: 4.90, 
+                reviewsCount: 12, 
+                image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
+                badge: "สายโค้ด", 
+                delivery: "นัดรับสยาม"
             },
             {
-                id: 3, title: "DJI Mini 4 Pro Fly More Combo", category: "drone", categoryName: "โดรน",
-                pricePerDay: 850, deposit: 1200, location: "กรุงเทพฯ", locationFull: "กรุงเทพฯ (ลาดกระบัง)",
-                lenderName: "คุณปวริศา", rating: 5.00, reviewsCount: 24, icon: "rocket",
-                badge: "เรตติ้ง 5.0", delivery: "นัดรับ / Grab"
+                id: 3, 
+                title: "DJI Mini 4 Pro Fly More Combo", 
+                category: "drone", 
+                categoryName: "โดรน",
+                pricePerDay: 850, 
+                deposit: 1200, 
+                location: "กรุงเทพฯ", 
+                locationFull: "กรุงเทพฯ (ลาดกระบัง)",
+                lenderName: "คุณปวริศา", 
+                rating: 5.00, 
+                reviewsCount: 24, 
+                image: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=800&q=80",
+                badge: "เรตติ้ง 5.0", 
+                delivery: "นัดรับ / Grab"
             },
             {
-                id: 4, title: "iPad Pro M2 12.9\" + Apple Pencil 2", category: "laptop", categoryName: "แท็บเล็ต",
-                pricePerDay: 450, deposit: 800, location: "เชียงใหม่", locationFull: "เชียงใหม่ (มช.)",
-                lenderName: "คุณณัชพล", rating: 4.88, reviewsCount: 9, icon: "tablet",
-                badge: "สายวาด", delivery: "นัดรับ มช."
+                id: 4, 
+                title: "iPad Pro M2 12.9\" + Apple Pencil 2", 
+                category: "laptop", 
+                categoryName: "แท็บเล็ต",
+                pricePerDay: 450, 
+                deposit: 800, 
+                location: "เชียงใหม่", 
+                locationFull: "เชียงใหม่ (มช.)",
+                lenderName: "คุณณัชพล", 
+                rating: 4.88, 
+                reviewsCount: 9, 
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80",
+                badge: "สายวาด", 
+                delivery: "นัดรับ มช."
             },
             {
-                id: 5, title: "Fujifilm X-T5 + XF 16-80mm f/4", category: "camera", categoryName: "กล้องถ่ายรูป",
-                pricePerDay: 750, deposit: 1000, location: "ชลบุรี", locationFull: "ชลบุรี (บางแสน)",
-                lenderName: "คุณรนพัฒน์", rating: 4.92, reviewsCount: 15, icon: "camera",
-                badge: "ท่องเที่ยว", delivery: "นัดรับบางแสน"
+                id: 5, 
+                title: "Fujifilm X-T5 + XF 16-80mm f/4", 
+                category: "camera", 
+                categoryName: "กล้องถ่ายรูป",
+                pricePerDay: 750, 
+                deposit: 1000, 
+                location: "ชลบุรี", 
+                locationFull: "ชลบุรี (บางแสน)",
+                lenderName: "คุณรนพัฒน์", 
+                rating: 4.92, 
+                reviewsCount: 15, 
+                image: "https://images.unsplash.com/photo-1500634245200-e5245c7574ef?auto=format&fit=crop&w=800&q=80",
+                badge: "ท่องเที่ยว", 
+                delivery: "นัดรับบางแสน"
             },
             {
-                id: 6, title: "Shure SM7B + Rodecaster Pro II", category: "audio", categoryName: "อุปกรณ์เสียง",
-                pricePerDay: 900, deposit: 1500, location: "กรุงเทพฯ", locationFull: "กรุงเทพฯ (จุฬา)",
-                lenderName: "คุณอภิพล", rating: 4.96, reviewsCount: 20, icon: "mic",
-                badge: "Studio", delivery: "นัดรับ / ส่งด่วน"
+                id: 6, 
+                title: "Shure SM7B + Rodecaster Pro II", 
+                category: "audio", 
+                categoryName: "อุปกรณ์เสียง",
+                pricePerDay: 900, 
+                deposit: 1500, 
+                location: "กรุงเทพฯ", 
+                locationFull: "กรุงเทพฯ (จุฬา)",
+                lenderName: "คุณอภิพล", 
+                rating: 4.96, 
+                reviewsCount: 20, 
+                image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=800&q=80",
+                badge: "Studio", 
+                delivery: "นัดรับ / ส่งด่วน"
             }
         ];
 
@@ -636,6 +743,16 @@
             lucide.createIcons();
             renderProductGrid(products);
             calculateLenderEarnings();
+
+            // Backdrop click to close modals
+            ['bookingModal', 'checkoutModal', 'listGearModal'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('click', (e) => {
+                        if (e.target === el) closeModal(id);
+                    });
+                }
+            });
         });
 
         // UI View Switcher
@@ -647,12 +764,12 @@
 
             if(mode === 'renter') {
                 rView.classList.remove('hidden'); lView.classList.add('hidden');
-                bR.className = "px-4 py-1.5 rounded bg-primary text-tertiary tech-btn font-sans";
-                bL.className = "px-4 py-1.5 rounded text-accent hover:bg-neutral tech-btn flex items-center gap-1 font-sans";
+                bR.className = "px-4 py-1.5 rounded-full bg-primary text-white shadow-sm transition-all font-sans";
+                bL.className = "px-4 py-1.5 rounded-full text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5 font-sans";
             } else {
                 rView.classList.add('hidden'); lView.classList.remove('hidden');
-                bL.className = "px-4 py-1.5 rounded bg-primary text-tertiary tech-btn flex items-center gap-1 font-sans";
-                bR.className = "px-4 py-1.5 rounded text-accent hover:bg-neutral tech-btn font-sans";
+                bL.className = "px-4 py-1.5 rounded-full bg-primary text-white shadow-sm transition-all flex items-center gap-1.5 font-sans";
+                bR.className = "px-4 py-1.5 rounded-full text-slate-600 hover:text-slate-900 transition-all font-sans";
             }
         }
 
@@ -665,52 +782,57 @@
             applyFilters();
         }
 
-        // Render Grid
+        // Render Grid (Borderless Cards, High-Res Product Photos, Soft Diffused Shadow)
         function renderProductGrid(items) {
             const grid = document.getElementById('productGrid');
             document.getElementById('productCountText').innerText = items.length;
             
             if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-secondary font-mono border tech-border rounded bg-tertiary border-dashed">NO_ASSETS_FOUND</div>`;
+                grid.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400 font-sans border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50">ไม่พบรายการอุปกรณ์ที่คุณค้นหา</div>`;
                 return;
             }
 
             grid.innerHTML = items.map(p => `
-                <div class="bg-tertiary rounded tech-border flex flex-col tech-card cursor-pointer group" onclick="openBookingModal(${p.id})">
+                <div class="rounded-3xl soft-card border border-slate-100/80 overflow-hidden flex flex-col group cursor-pointer" onclick="openBookingModal(${p.id})">
                     
-                    <div class="p-4 border-b tech-border bg-[#F8FAFC] rounded-t flex justify-between items-start relative h-32 overflow-hidden">
-                        <i data-lucide="${p.icon}" class="absolute -right-4 -bottom-4 w-32 h-32 text-primary opacity-5 group-hover:scale-110 transition-transform duration-500"></i>
-                        
-                        <div class="w-12 h-12 bg-tertiary rounded tech-border flex items-center justify-center text-primary relative z-10 shadow-sm group-hover:bg-primary group-hover:text-tertiary transition-colors">
-                            <i data-lucide="${p.icon}" class="w-6 h-6"></i>
-                        </div>
-                        <div class="flex flex-col items-end gap-1 relative z-10">
-                            <span class="bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded text-[10px] font-mono">${p.badge}</span>
+                    <!-- High-Res Product Image Showcase -->
+                    <div class="relative h-52 w-full bg-slate-50 overflow-hidden flex items-center justify-center p-3">
+                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 flex items-center gap-1.5 z-10">
+                            <span class="bg-white/90 backdrop-blur-md text-primary font-mono text-[10px] px-2.5 py-1 rounded-full shadow-sm font-semibold">${p.badge}</span>
                         </div>
                     </div>
 
-                    <div class="p-5 flex-grow flex flex-col gap-2">
-                        <div class="flex justify-between items-center text-[10px] text-secondary font-mono">
-                            <span class="text-surface font-bold uppercase">${p.categoryName}</span>
-                            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> ${p.location}</span>
-                        </div>
-                        
-                        <h3 class="font-bold text-primary text-sm font-sans leading-tight line-clamp-2">${p.title}</h3>
-                        
-                        <div class="flex items-center gap-2 text-[10px] font-mono mt-1">
-                            <span class="text-warning flex items-center"><i data-lucide="star" class="w-3 h-3 fill-warning mr-0.5"></i> ${p.rating.toFixed(2)}</span>
-                            <span class="text-secondary border-l tech-border pl-2">LENDER: ${p.lenderName}</span>
-                        </div>
-                    </div>
-
-                    <div class="border-t tech-border p-4 flex items-end justify-between bg-[#F8FAFC] rounded-b">
+                    <!-- Card Body Details -->
+                    <div class="p-5 flex-grow flex flex-col justify-between gap-3">
                         <div>
-                            <p class="text-[10px] text-accent font-mono mb-0.5">RATE/DAY</p>
-                            <p class="font-mono font-bold text-lg text-primary">THB ${p.pricePerDay.toLocaleString()}</p>
+                            <div class="flex justify-between items-center text-[11px] text-slate-400 font-sans mb-1.5">
+                                <span class="text-sky-700 font-semibold uppercase text-[10px] bg-sky-50 px-2 py-0.5 rounded-full">${p.categoryName}</span>
+                                <span class="flex items-center gap-1 text-slate-500"><i data-lucide="map-pin" class="w-3 h-3 text-sky-500"></i> ${p.location}</span>
+                            </div>
+                            
+                            <h3 class="font-bold text-slate-900 text-sm group-hover:text-primary transition-colors leading-snug line-clamp-2">${p.title}</h3>
                         </div>
-                        <button class="bg-primary/10 text-primary px-3 py-1.5 rounded text-xs font-bold tech-btn flex items-center gap-1 font-sans group-hover:bg-primary group-hover:text-tertiary">
-                            เช่าเลย <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                        </button>
+                        
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+                            <div class="flex items-center gap-1.5 text-slate-600">
+                                <span class="flex items-center text-amber-500 font-semibold text-xs"><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 mr-0.5"></i> ${p.rating.toFixed(2)}</span>
+                                <span class="text-slate-300">|</span>
+                                <span class="text-[11px] text-slate-500 truncate max-w-[100px]">${p.lenderName}</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-[10px] text-slate-400 block font-sans">ราคา/วัน</span>
+                                <span class="font-mono font-bold text-base text-primary">THB ${p.pricePerDay.toLocaleString()}</span>
+                            </div>
+                        </div>
+
+                        <!-- Refined Lighter Blue "เช่าเลย" Button -->
+                        <div class="pt-1">
+                            <button class="w-full py-2.5 px-3 rounded-2xl bg-sky-50 hover:bg-sky-500 text-sky-700 hover:text-white font-medium text-xs transition-all duration-200 flex items-center justify-center gap-1.5 group/btn">
+                                <span>เช่าเลย</span>
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -722,10 +844,10 @@
         function setCategoryFilter(category) {
             activeCategory = category;
             document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.className = 'cat-btn px-4 py-1.5 rounded-full bg-tertiary border tech-border text-accent hover:bg-neutral tech-btn whitespace-nowrap font-sans';
+                btn.className = 'cat-btn px-4 py-2 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80 font-medium transition-all whitespace-nowrap';
             });
             const activeBtn = document.getElementById(`cat-${category}`);
-            if (activeBtn) activeBtn.className = 'cat-btn px-4 py-1.5 rounded-full bg-primary text-tertiary tech-btn whitespace-nowrap font-sans';
+            if (activeBtn) activeBtn.className = 'cat-btn px-4 py-2 rounded-full bg-primary text-white font-medium shadow-sm transition-all whitespace-nowrap';
 
             applyFilters();
         }
@@ -763,13 +885,20 @@
         // Modals Management
         function closeModal(id) {
             const el = document.getElementById(id);
+            if (!el) return;
             el.classList.add('hidden');
             el.classList.remove('flex');
+            el.style.display = 'none';
         }
         function openModal(id) {
             const el = document.getElementById(id);
+            if (!el) {
+                console.error("Modal not found:", id);
+                return;
+            }
             el.classList.remove('hidden');
             el.classList.add('flex');
+            el.style.display = 'flex';
         }
 
         // Booking Logic
@@ -779,10 +908,12 @@
 
             document.getElementById('modalTitle').innerText = selectedProduct.title;
             document.getElementById('modalCategoryBadge').innerText = selectedProduct.categoryName;
-            document.getElementById('modalLocation').innerText = `📍 Node: ${selectedProduct.locationFull}`;
+            document.getElementById('modalLocationText').innerText = `Node: ${selectedProduct.locationFull}`;
             document.getElementById('modalLenderName').innerText = selectedProduct.lenderName;
             document.getElementById('modalRatingText').innerText = selectedProduct.rating.toFixed(2);
             document.getElementById('modalDeliveryType').innerText = selectedProduct.delivery;
+            document.getElementById('modalProductImage').src = selectedProduct.image;
+            document.getElementById('modalProductImage').alt = selectedProduct.title;
 
             document.getElementById('rentalDaysSlider').value = 1;
 
@@ -826,48 +957,87 @@
             document.getElementById('lenderNetEarnings').innerText = `THB ${net.toLocaleString()}`;
         }
 
-        function openListGearModal() { openModal('listGearModal'); }
+        function openListGearModal() { 
+            openModal('listGearModal'); 
+        }
+
+        const defaultThumbnails = {
+            camera: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=200&q=80",
+            laptop: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=200&q=80",
+            drone: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=200&q=80",
+            audio: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=200&q=80"
+        };
 
         function submitNewGear(e) {
             e.preventDefault();
-            const title = document.getElementById('newGearTitle').value;
-            const cat = document.getElementById('newGearCategory').value;
-            const price = parseInt(document.getElementById('newGearPrice').value);
-            const loc = document.getElementById('newGearLocation').value;
-            const dep = parseInt(document.getElementById('newGearDeposit').value);
+            try {
+                const title = document.getElementById('newGearTitle').value.trim();
+                const cat = document.getElementById('newGearCategory').value;
+                const price = parseInt(document.getElementById('newGearPrice').value) || 0;
+                const loc = document.getElementById('newGearLocation').value.trim();
+                const dep = parseInt(document.getElementById('newGearDeposit').value) || 0;
 
-            const catNames = { camera: "กล้องถ่ายรูป", laptop: "คอมพิวเตอร์", drone: "โดรน", audio: "อุปกรณ์เสียง" };
-            const icons = { camera: "camera", laptop: "laptop", drone: "rocket", audio: "mic" };
-            const newId = products.length + 1;
-            const shortId = (cat === 'drone' ? 'DR' : cat.substring(0,3).toUpperCase()) + "-" + newId;
+                if (!title || price <= 0) {
+                    alert("กรุณากรอกข้อมูลอุปกรณ์และราคาเช่าให้ถูกต้อง");
+                    return;
+                }
 
-            const newP = {
-                id: newId, title: title, category: cat, categoryName: catNames[cat],
-                pricePerDay: price, deposit: dep, location: loc, locationFull: loc,
-                lenderName: "คุณ (เจ้าของ)", rating: 5.00, reviewsCount: 0, icon: icons[cat],
-                badge: "NEW", delivery: "นัดรับ"
-            };
-            products.unshift(newP);
+                const catNames = { camera: "กล้องถ่ายรูป", laptop: "คอมพิวเตอร์", drone: "โดรน", audio: "อุปกรณ์เสียง" };
+                const newId = products.length + 1;
+                const shortId = (cat === 'drone' ? 'DR' : cat.substring(0,3).toUpperCase()) + "-" + newId;
+                const imgSrc = defaultThumbnails[cat] || defaultThumbnails.camera;
 
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="py-3 flex items-center gap-2 font-sans font-medium text-primary">
-                    <div class="bg-blue-50 p-1.5 rounded border tech-border"><i data-lucide="${icons[cat]}" class="w-4 h-4 text-surface"></i></div>
-                    <div>
-                        <span>${title}</span>
-                        <span class="block text-[9px] text-secondary font-mono mt-0.5">ID: ${shortId}</span>
-                    </div>
-                </td>
-                <td class="py-3">${price.toLocaleString()}</td>
-                <td class="py-3"><span class="text-success flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3 h-3"></i> พร้อมเช่า</span></td>
-                <td class="py-3 text-right text-primary font-bold">0</td>
-            `;
-            document.getElementById('lenderGearTable').prepend(tr);
-            lucide.createIcons();
+                const newP = {
+                    id: newId, 
+                    title: title, 
+                    category: cat, 
+                    categoryName: catNames[cat] || "อุปกรณ์",
+                    pricePerDay: price, 
+                    deposit: dep, 
+                    location: loc, 
+                    locationFull: loc,
+                    lenderName: "คุณ (เจ้าของ)", 
+                    rating: 5.00, 
+                    reviewsCount: 0, 
+                    image: imgSrc,
+                    badge: "NEW", 
+                    delivery: "นัดรับ"
+                };
+                products.unshift(newP);
 
-            closeModal('listGearModal');
-            showToast("DATA_UPLOADED", `อัปโหลดรายการ ${title} ขึ้นระบบ P2P เรียบร้อยแล้ว`);
-            renderProductGrid(products);
+                const table = document.getElementById('lenderGearTable');
+                if (table) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="py-3.5 flex items-center gap-3">
+                            <img src="${imgSrc}" alt="${title}" class="w-11 h-11 rounded-xl object-cover shadow-sm">
+                            <div>
+                                <span class="font-semibold text-slate-900 text-xs block">${title}</span>
+                                <span class="text-[10px] text-slate-400 font-mono">ID: ${shortId}</span>
+                            </div>
+                        </td>
+                        <td class="py-3.5 font-mono">${price.toLocaleString()}</td>
+                        <td class="py-3.5">
+                            <span class="text-emerald-600 font-medium flex items-center gap-1.5 text-xs">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> พร้อมเช่า
+                            </span>
+                        </td>
+                        <td class="py-3.5 text-right text-primary font-bold font-mono text-sm">0</td>
+                    `;
+                    table.prepend(tr);
+                }
+                lucide.createIcons();
+
+                closeModal('listGearModal');
+
+                const form = document.getElementById('newGearForm');
+                if (form) form.reset();
+
+                showToast("DATA_UPLOADED", `อัปโหลดรายการ ${title} ขึ้นระบบ P2P เรียบร้อยแล้ว`);
+                renderProductGrid(products);
+            } catch (err) {
+                console.error("Error submitting new gear:", err);
+            }
         }
 
         // Custom Toast System
@@ -877,11 +1047,13 @@
             document.getElementById('toastMsg').innerText = msg;
             
             t.classList.remove('hidden');
-            t.classList.add('flex', 'toast-enter');
+            t.classList.add('flex');
+            t.style.display = 'flex';
             
             setTimeout(() => { 
                 t.classList.add('hidden'); 
-                t.classList.remove('flex', 'toast-enter'); 
+                t.classList.remove('flex'); 
+                t.style.display = 'none';
             }, 4000);
         }
 
